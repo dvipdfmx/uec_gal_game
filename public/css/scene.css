@@ -28,7 +28,7 @@
 #textarea-wrap {
     position: absolute;
     width: 100%;
-    z-index: 100;
+    z-index: 3;
     top: 0;
     left: 0;
     bottom: 0;
@@ -39,9 +39,7 @@
 }
 
 #textarea {
-    /* width: 70%; */
     margin: 2rem 20%;
-    min-width: 700px;
     padding: 30px;
     background: var(--primary-gray-transparent);
     color: #ccc;
@@ -53,7 +51,7 @@
     display: flex;
     flex-direction: column;
     text-shadow: 0 0 10px var(--primary-text-shadow);
-
+    font-size: large;
 }
 
 #textarea:hover {
@@ -72,28 +70,31 @@
     height: 30px;
     width: 100%;
     background: var(--primary-gray-transparent);
+    z-index: 10;
 }
 
 #footer {
     height: 50px;
     width: 100%;
     background: var(--primary-gray-transparent);
+    z-index: 10;
 }
 
 #text-header {}
 
-#character {
+#name {
     /* border-bottom: .5px solid #aaa; */
     width: 20%;
-    margin: 5px;
+    margin-bottom: 5px;
     text-align: center;
-    font-size: large;
+    font-size: x-large;
+    font-weight: bold;
 }
 
 #text {
     flex: 1 1 auto;
     padding: 5px 0;
-    font-size: medium;
+    font-size: 1.3rem;
 }
 
 #text-footer {
@@ -120,8 +121,9 @@
     cursor: pointer;
     text-shadow: 0 0 10px var(--primary-text-shadow);
     outline: none;
-    font-size: large;
+    font-size: x-large;
     text-align: center;
+    font-weight: bold;
 }
 
 .gal-btn:hover {
@@ -153,7 +155,53 @@
 }
 
 #scene-mask.fade {
-    z-index: 10000;
+    z-index: 5;
     background: black;
     transition-duration: var(--fade-duration);
+}
+
+.hide {
+    display: none !important;
+}
+
+#characters {
+    position: relative;
+}
+
+.character {
+    position: absolute;
+    left: 50vw;
+    top: 50vh;
+    transform: translate(-50%, -50%);
+    transition-duration: 1000ms;
+    opacity: 1.0;
+}
+
+.character.swing>img {
+    animation: swing linear 100ms 3;
+}
+
+.character.hide-opacity {
+    opacity: 0.0;
+    /* display: none; */
+    transition-duration: 1000ms;
+}
+
+:root {
+    --swing-distance: 10px;
+    --swing-distance-: -10px;
+}
+
+@keyframes swing {
+    0% {
+        transform: translateX(var(--swing-distance));
+    }
+
+    50% {
+        transform: translateX(var(--swing-distance-));
+    }
+
+    100% {
+        transform: translateX(var(--swing-distance));
+    }
 }
