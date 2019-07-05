@@ -1,0 +1,141 @@
+:root {
+    --primary-gray: #555;
+    --primary-gray-transparent: #77777777;
+    --primary-text-shadow: black;
+    --primary-text: #ccc;
+    --primary-hover: #55555577;
+    --primary-active: #55555599;
+    --primary-hover-border: #333;
+}
+
+#main {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: grid;
+    grid-template-rows: 1.75rem auto 1.75rem;
+}
+
+#scene {
+    width: 100%;
+    height: calc(100vh - 3.5rem);
+    position: relative;
+}
+
+#textarea-wrap {
+    position: absolute;
+    width: 100%;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+#textarea {
+    /* width: 70%; */
+    margin: 2rem 20%;
+    min-width: 700px;
+    padding: 30px;
+    background: var(--primary-gray-transparent);
+    color: #ccc;
+    border-radius: 15px;
+    min-height: 8rem;
+    box-shadow: 0 0 30px var(--primary-gray);
+    user-select: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    text-shadow: 0 0 10px var(--primary-text-shadow);
+
+}
+#textarea:hover{
+    box-shadow: 0 0 30px var(--primary-hover-border);
+}
+
+#background {
+    position: absolute;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+#header {
+    height: 30px;
+    width: 100%;
+    background: var(--primary-gray-transparent);
+}
+
+#footer {
+    height: 50px;
+    width: 100%;
+    background: var(--primary-gray-transparent);
+}
+
+#text-header {}
+
+#character {
+    /* border-bottom: .5px solid #aaa; */
+    width: 20%;
+    margin: 5px;
+    text-align: center;
+    font-size: large;
+}
+
+#text {
+    flex: 1 1 auto;
+    padding: 5px 0;
+    font-size: medium;
+}
+
+#text-footer {
+    height: 2rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#selector {
+    margin: 10px 20%;
+    display: flex;
+    justify-content: center;
+}
+
+.gal-btn {
+    margin: 0 10px;
+    padding: 10px;
+    background: var(--primary-gray-transparent);
+    color: var(--primary-text);
+    border: 1px solid transparent;
+    border-radius: 5px;
+    box-shadow: 0 0 30px var(--primary-gray);
+    user-select: none;
+    cursor: pointer;
+    text-shadow: 0 0 10px var(--primary-text-shadow);
+    outline: none;
+    font-size: large;
+    text-align: center;
+}
+
+.gal-btn:hover {
+    transform: scale(1.3);
+    background: var(--primary-hover);
+    box-shadow: 0 0 30px var(--primary-hover-border)
+}
+
+.gal-btn:focus {
+    border-color: #999;
+}
+
+.gal-btn:active {
+    background: var(--primary-active);
+}
+
+#selector button {
+    flex-grow: 1;
+}
