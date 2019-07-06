@@ -7,4 +7,7 @@
 }, {
     "id": "eriri",
     "img": "https://www.saenai.tv/images/character/chara_eriri_vsl.png"
+},{
+    "id": "human",
+    "img": "../img/human.png"
 }]

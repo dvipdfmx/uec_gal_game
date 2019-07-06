@@ -281,7 +281,6 @@ const Character = (function () {
         this.states_type = types;
         types.forEach(type => this.element.classList.add(type));
     };
-    // Character.prototype.disable=function()
     Character.hide_all = function () {
         list.forEach(e => e.hide());
     };

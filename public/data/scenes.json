@@ -60,7 +60,7 @@
             "states": ["disable"]
         }]
     }],
-    "img": "../img/test/DSC_0110.jpg",
+    "img": "../img/test/DSC_0009.jpg",
     "choice": [{
         "label": "部活を見に行く",
         "scene_id": "scene2"
