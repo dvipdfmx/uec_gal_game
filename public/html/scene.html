@@ -12,35 +12,52 @@
 <body>
     <div id="main">
         <div id="scene-mask"></div>
-        <div id="header" style="grid-row: 1;"></div>
+        <div id="header" style="grid-row: 1;">
+        </div>
         <div id="scene" style="grid-row: 2;">
+            <div id="audios" style="display: none;"></div>
             <div id="characters">
                 <!-- <img id="megumi" class="character" src="https://www.saenai.tv/images/character/chara_megumi_vsl.png"> -->
                 <!-- <img class="character" src="https://www.saenai.tv/images/character/chara_eriri_vsl.png">
                 <img class="character" src="https://www.saenai.tv/images/character/chara_utaha_vsl.png"> -->
             </div>
-            <div id="textarea-wrap">
+            <div id="selectors-wrap" class="scene-inner">
                 <div id="selector">
                     <button class="gal-btn">部室に行く</button>
                     <button class="gal-btn">家に帰る</button>
                 </div>
+            </div>
+            <div id="textarea-wrap" class="scene-inner">
                 <div id="textarea">
                     <div id="text-header">
                         <div id="name"></div>
                     </div>
-                    <div id="text">
+                    <div id="text-wrap">
+                        <div id="text"></div>
+                        <div id="text-hidden"></div>
                     </div>
                     <div id="text-footer"></div>
                 </div>
             </div>
         </div>
-        <div id="footer" style="grid-row: 3;">
-
-        </div>
+        <div id="footer" style="grid-row: 3;"></div>
         <img id="background" src="../img/sea.jpg"></img>
     </div>
     <script src="../js/scene.js"></script>
-
+    <script>
+        Scene.clear(true);
+        fetch('../data/characters.json').then(async value => {
+            Character.compile(await value.json());
+            fetch('../data/audios.json').then(async value => {
+                Audio.compile(await value.json());
+                fetch('../data/scenes.json').then(async value => {
+                    Scene.compile(await value.json());
+                    Scene.find('scene1').show();
+                    await document.body.requestFullscreen();
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

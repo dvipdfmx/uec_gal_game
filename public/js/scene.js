@@ -1,60 +1,98 @@
+// css :root --face-durationと同じにする
+const TRANSITION_DURATION = 2000;
 const Scene = (function () {
     // static member
     const scenes = {};
+    const continuous_audio = [];
     const text = document.querySelector('#text');
+    const text_hidden = document.querySelector('#text-hidden');
     const ename = document.querySelector('#name');
     const image = document.querySelector('#background');
     const selector = document.querySelector('#selector');
     const mask = document.querySelector('#scene-mask');
     const next = document.querySelector('#textarea');
+    const textarea_wrap = document.querySelector('#textarea-wrap');
+    const selectors_wrap = document.querySelector('#selectors-wrap');
+
     let text_show_interval = 0;
 
-    const TRANSITION_DURATION = 1000;
-    const TEXT_SHOW_DURATION = 3000;
+    const TEXT_SHOW_SPEED = 30;
 
     const Scene = function (data = {
         id: undefined,
         scripts: [{
             name: undefined,
             text: undefined,
-            duration: 0,
+            speed: 0,
             characters: [{
                 id: undefined,
                 x: 50,
                 y: 50,
+                states: [],
+                effects: [],
+            }],
+            effects: [],
+            // state:undefined,
+            audios: [{
+                id: undefined,
+                time: undefined,
+                volume: 1.0
             }]
         }],
         choice: undefined,
         img: undefined,
         show_selector: false,
+        audios: [{
+            id: undefined,
+            time: undefined,
+            continue_to: 'scene|script id'
+        }]
     }) {
         this.script_index = 0;
         this.scripts = data.scripts;
         this.id = data.id;
         this.choice = data.choice;
         this.img = data.img;
+        this.audios = data.audios;
         scenes[this.id] = this;
     };
     Scene.current = undefined;
 
     // class member
-    Scene.prototype.set_script = function (script) {
+    Scene.prototype.set_script = function (script, wait = 0) {
+        if (this.last_script && this.last_script.audios) this.unset_audios(this.last_script.audios);
+        textarea_wrap.classList.remove('hide');
+        selectors_wrap.classList.add('hide-opacity');
         ename.textContent = script.name;
+        text_hidden.textContent = script.text;
         const str_len = script.text.length;
-        const ms_per_char = (script.duration || TEXT_SHOW_DURATION) / str_len
         let char_index = 0;
         // 文字を順次表示
-        text_show_interval = setInterval((() => {
-            const f = () => {
-                text.textContent = script.text.slice(0, ++char_index);
-                if (char_index == str_len) {
-                    clearInterval(text_show_interval);
-                }
-            };
-            return (f(), f);
-        })(), ms_per_char);
-        // キャラクターの表示
-        this.set_characters(script.characters || []);
+        setTimeout(() => {
+            text_show_interval = setInterval((() => {
+                const f = () => {
+                    text.textContent = script.text.slice(0, ++char_index);
+                    if (char_index == str_len) {
+                        clearInterval(text_show_interval);
+                    }
+                };
+                return (f(), f);
+            })(), script.speed || TEXT_SHOW_SPEED);
+            if (script.audios) this.set_audios(script.audios);
+        }, wait);
+        setTimeout(() => {
+            // キャラクターの表示
+            this.set_characters(script.characters || []);
+            this.uneffects();
+            if (script.effects) this.effects(script.effects);
+        }, 0);
+        this.last_script = script;
+    };
+    Scene.prototype.effects = function (types) {
+        types.forEach(e => image.classList.add(e));
+    };
+    Scene.prototype.uneffects = function () {
+        image.className = '';
     };
     Scene.prototype.set_image = function (url) {
         image.src = url;
@@ -62,11 +100,10 @@ const Scene = (function () {
     Scene.prototype.next_script = function () {
         clearInterval(text_show_interval);
         this.script_index++;
-        if (this.script_index < this.scripts.length - 1) {
+        if (this.script_index < this.scripts.length) {
             this.set_script(this.scripts[this.script_index]);
-        } else if (this.script_index == this.scripts.length - 1) {
+        } else if (this.script_index == this.scripts.length) {
             this.set_choice(this.choice);
-            this.set_script(this.scripts[this.script_index]);
         } else {
             this.script_index--;
             return;
@@ -75,36 +112,70 @@ const Scene = (function () {
     Scene.prototype.show = function () {
         Scene.current = this;
         next.onclick = this.next_script.bind(this);
-        clearInterval(text_show_interval);
-        const mask_class = 'fade';
-        mask.classList.add(mask_class);
-        text.textContent = '';
-        setTimeout(() => {
-            if (this.scripts.length == 1) {
-                selector.classList.remove('hide');
-                this.set_choice(this.choice);
-            } else {
-                selector.classList.add('hide');
-            }
-            this.set_image(this.img);
-        }, TRANSITION_DURATION / 2);
-        setTimeout(() => {
-            this.set_script(this.scripts[0]);
-            mask.classList.remove(mask_class);
-        }, 1000);
-    };
-    Scene.prototype.find_scene = function (id) {
-        console.log(id);
-        for (const key in scenes) {
-            if (scenes.hasOwnProperty(key)) {
-                const scene = scenes[key];
-                if (scene.id == id) return scene;
-            }
+        if (!this.scripts.length) {
+            this.set_choice(this.choice);
         }
-        console.log('scene not found: id : ' + id)
-        return null;
+        this.set_image(this.img);
+        mask.classList.remove('fade');
+        this.set_script(this.scripts[0]);
+        if (this.audios) this.set_audios(this.audios);
     };
-    // const previous_characters = [];
+    Scene.prototype.clear = function () {
+        Scene.prototype.last_script = undefined;
+        this.script_index = 0;
+        this.uneffects();
+        if (this.audios) this.unset_audios(this.audios);
+    };
+    Scene.clear = function (fast = false) {
+        // フェードアウト
+        // if (fast) {
+        //     mask.classList.add('fast');
+        //     mask.classList.remove('fast');
+        //     setTimeout(() => {}, TRANSITION_DURATION);
+        // }
+        mask.classList.add('fade');
+        Character.hide_all();
+        // テキストクリア
+        clearInterval(text_show_interval);
+        text.textContent = '';
+        // 選択肢削除
+        while (selector.firstChild) selector.removeChild(selector.firstChild);
+
+    };
+    Scene.find = function (id) {
+        return scenes[id];
+    };
+
+    //-- Audio
+    Scene.prototype.set_audios = function (audios_data) {
+        audios_data.forEach(e => this.set_audio(e));
+    };
+    Scene.prototype.unset_audios = function (audios_data, /* scene_or_script_id = undefined */ ) {
+        audios_data.forEach(e => {
+            clearInterval(e.timeout);
+            e.timeout = 0;
+            // if (e.continue_to) {
+            //     continuous_audio.push(e);
+            // } else {
+            Audio.find(e.id).stop();
+            // }
+        });
+        // continuous_audio.forEach(e => {
+        //     if (e.id == scene_or_script_id) {
+        //         Audio.find(e.id).stop();
+        //     }
+        // });
+    };
+    // Scene.prototype.check_continuous_audio=function
+    Scene.prototype.set_audio = function (audio_data) {
+        const audio = Audio.find(audio_data.id);
+        const audio_timeout = setTimeout(() => {
+            audio.play(audio_data.volume == undefined ? 1.0 : audio_data.volume, audio_data.fadein);
+        }, audio_data.time);
+        audio_data.timeout = audio_timeout;
+    };
+    //--/ Audio
+
     Scene.prototype.set_characters = function (characters_data) {
         Character.hide_all();
         characters_data.forEach(e => this.set_character(e));
@@ -112,28 +183,35 @@ const Scene = (function () {
     Scene.prototype.set_character = function (character_data) {
         const character = Character.find(character_data.id);
         character.set_position(character_data.x, character_data.y);
-        if (character_data.move) character.move(character_data.move);
+        if (character_data.effects) character.effects(character_data.effects);
+        if (character_data.states) character.states(character_data.states);
     };
     Scene.prototype.set_choice = function (choice) {
-        while (selector.firstChild) selector.removeChild(selector.firstChild);
+        // while (selector.firstChild) selector.removeChild(selector.firstChild);
+        textarea_wrap.classList.add('hide');
+        selectors_wrap.classList.remove('hide-opacity');
+        const self = this;
         if (choice && choice.length) {
             selector.classList.remove('hide');
             choice.forEach(e => {
                 const btn = document.createElement('button');
                 btn.classList.add('gal-btn');
                 btn.textContent = e.label;
-                btn.onclick = this.show.bind(this.find_scene(e.scene_id));
+                btn.onclick = () => {
+                    Scene.clear();
+                    self.clear();
+                    setTimeout(() => {
+                        self.show.bind(Scene.find(e.scene_id))();
+                    }, TRANSITION_DURATION);
+                };
                 selector.appendChild(btn);
             });
         } else {
             selector.classList.add('hide');
         }
     };
-    Scene.prototype.start = function () {
-
-    };
-    Scene.prototype.end = function () {
-
+    Scene.compile = function (scenes_data) {
+        scenes_data.map(e => new Scene(e));
     };
     return Scene;
 })();
@@ -172,137 +250,106 @@ const Character = (function () {
         this.element.style.top = -y + 50 + 'vh';
     };
     Character.prototype.hide = function () {
-        if (this.move_timeout) clearTimeout(this.move_timeout);
         if (this.move_timeout_start) clearTimeout(this.move_timeout_start);
         this.element.classList.add('hide-opacity');
+        // this.element.classList.add('character');
+        this.uneffects();
+        this.unstates();
     };
-    Character.prototype.move = function (type, max_duration = 1000) {
+    Character.prototype.uneffects = function () {
+        if (this.effects_type) {
+            this.effects_type.forEach(e => this.element.classList.remove(e));
+        }
+    };
+    Character.prototype.effects = function (types, max_duration = 1000) {
+        this.effects_type = types;
         if (this.move_timeout) clearTimeout(this.move_timeout);
         if (this.move_timeout_start) clearTimeout(this.move_timeout_start);
         this.move_timeout_start = setTimeout(() => {
-            this.element.classList.add(type);
+            types.forEach(type => this.element.classList.add(type));
             this.move_timeout = setTimeout(() => {
-                this.element.classList.remove(type);
+                types.forEach(type => this.element.classList.remove(type));
             }, max_duration);
         }, 1000);
     };
+    Character.prototype.unstates = function () {
+        if (this.states_type) {
+            this.states_type.forEach(e => this.element.classList.remove(e));
+        }
+    };
+    Character.prototype.states = function (types) {
+        this.states_type = types;
+        types.forEach(type => this.element.classList.add(type));
+    };
+    // Character.prototype.disable=function()
     Character.hide_all = function () {
         list.forEach(e => e.hide());
+    };
+    Character.compile = function (characters_data) {
+        characters_data.map(e => new Character(e));
     };
     return Character;
 })();
 
-const characters = [new Character({
-    id: 'megumi',
-    img: 'https://www.saenai.tv/images/character/chara_megumi_vsl.png',
-}), new Character({
-    id: 'utaha',
-    img: 'https://www.saenai.tv/images/character/chara_utaha_vsl.png',
-}), new Character({
-    id: 'eriri',
-    img: 'https://www.saenai.tv/images/character/chara_eriri_vsl.png',
-})];
 
-const scenes = [new Scene({
-        id: 'scene1',
-        scripts: [{
-            name: '太郎',
-            text: '入学したよ',
-            duration: 1,
-            characters: [{
-                id: 'megumi',
-                x: 0,
-                y: 0
-            }, {
-                id: 'eriri',
-                x: -30,
-                y: 10,
-            }, {
-                id: 'utaha',
-                x: 30,
-                y: -10
-            }]
-        }, {
-            name: '笵 建明',
-            text: '同学门好!',
-            characters: [{
-                id: 'megumi',
-                x: 30,
-                y: 0,
-                move: 'swing'
-            }, ]
-        }, {
-            name: '太郎',
-            text: 'ロウシーハオ',
-            duration: 1,
-            characters: [{
-                id: 'eriri',
-                x: -30,
-                y: 10
-            }, {
-                id: 'utaha',
-                x: 30,
-                y: -10
-            }]
-        }],
-        img: '../img/test/DSC_0110.jpg',
-        choice: [{
-            label: '部活を見に行く',
-            scene_id: 'scene2',
-        }, {
-            label: '家に帰る',
-            scene_id: undefined,
-        }]
-    }),
-    new Scene({
-        id: 'scene2',
-        scripts: [{
-            name: '太郎',
-            text: '　【ロンドンＡＦＰ時事】ロンドンの競売大手クリスティーズで４日、約３０００年前に制作された古代エジプト王ツタンカーメンの頭像が競売に掛けられ、約６００万ドル（約６億４０００万円）で落札された。落札者は明らかにされていない。エジプト当局は像の売却中止と返還を要求している。'
-        }, {
-            name: '太郎',
-            text: '　頭像は珪岩製で高さ２８．５センチ。エジプト考古省関係者は、１９７０年代にルクソールの古代遺跡カルナック神殿から「盗まれた」とみられると主張した。',
-        }, {
-            name: '太郎',
-            text: '　エジプト外務省は英外務省と国連教育科学文化機関（ユネスコ）に対し、介入して競売を中止するよう求めた。これに対しクリスティーズは、像の存在は長年にわたり「良く知られ、公然と展示されていた」が、エジプトが懸念を表明したことはなかったと反論している。'
-        }, {
-            name: '太郎',
-            text: '　オークション会場前には「密輸された美術品を売買するのはやめろ」などと書かれたカードを掲げた抗議者が集まった。'
-        }],
-        img: '../img/test/DSC_0116.jpg',
-        choice: [{
-            label: 'MMAの見学に行く',
-            scene_id: 'mma',
-        }, {
-            label: 'やっぱり家に帰る',
-            scene_id: undefined,
-        }, {
-            label: '生協を見に行く',
-            scene_id: 'seikyo',
-        }]
-    }),
-    new Scene({
-        id: 'seikyo',
-        scripts: [{
-            name: '太郎',
-            text: '入学したよ',
-        }],
-        img: '../img/test/DSC_0094.jpg',
-        choice: [{
-            label: 'やっぱり家に帰る',
-            scene_id: undefined,
-        }]
-    }),
-    new Scene({
-        id: 'mma',
-        scripts: [{
-            name: '太郎',
-            text: 'MMAに入部しよう',
-        }],
-        img: '../img/test/DSC_0075.jpg',
-        choice: [{
-            label: 'やっぱり家に帰る',
-            scene_id: undefined,
-        }]
-    })
-][0].show();
+const Audio = (function () {
+    const dict = {};
+    const audioel = document.querySelector('#audios');
+    const Audio = function (data = {
+        id: undefined,
+        url: undefined,
+    }) {
+        Object.assign(this, data);
+        this.element = this.create();
+        dict[this.id] = this;
+    };
+    Audio.prototype.create = function () {
+        const audio = document.createElement('audio');
+        audio.src = this.url;
+        audio.preload = 'auto';
+        audioel.appendChild(audio);
+        return audio;
+    };
+    Audio.compile = function (audios_data) {
+        audios_data.forEach(e => new Audio(e));
+    };
+    Audio.find = function (id) {
+        return dict[id];
+    };
+
+    Audio.prototype.play = function (target_volume = 1.0, fadein = false) {
+        const self = this;
+        if (fadein) {
+            this.element.volume = 0.0;
+            this.element.play();
+            (function volume_up(volume) {
+                self.element.volume = volume;
+                setTimeout(() => {
+                    volume += 0.1;
+                    if (volume <= target_volume) {
+                        volume_up(volume);
+                    }
+                }, TRANSITION_DURATION / 10);
+            })(self.element.volume);
+        } else {
+            this.element.volume = target_volume;
+            this.element.play();
+        }
+    };
+    Audio.prototype.stop = function () {
+        const self = this;
+        (function volume_down(volume) {
+            self.element.volume = volume;
+            setTimeout(() => {
+                volume -= 0.1;
+                if (volume > 0) {
+                    volume_down(volume)
+                } else {
+                    self.element.pause();
+                    self.element.currentTime = 0;
+                }
+            }, TRANSITION_DURATION / 10);
+        })(self.element.volume);
+    };
+    return Audio;
+})();

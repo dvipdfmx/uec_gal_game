@@ -6,7 +6,7 @@
     --primary-hover: #55555577;
     --primary-active: #55555599;
     --primary-hover-border: #333;
-    --fade-duration: 1000ms;
+    --fade-duration: 2000ms;
 }
 
 #main {
@@ -25,17 +25,27 @@
     position: relative;
 }
 
-#textarea-wrap {
+.scene-inner {
     position: absolute;
     width: 100%;
-    z-index: 3;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
     display: flex;
     flex-direction: column;
+}
+
+#textarea-wrap {
+    z-index: 4;
     justify-content: flex-end;
+    /* transition-duration: 300ms; */
+}
+
+#selectors-wrap {
+    z-index: 3;
+    justify-content: center;
+    transition-duration: 300ms;
 }
 
 #textarea {
@@ -64,6 +74,16 @@
     width: 100%;
     height: 100%;
     z-index: -1;
+    transition-duration: 10000ms;
+}
+
+#background.pan {
+}
+#background.pan {
+    /* transform */
+    transform: scale(2);
+    /* transform: translateX(-100%) scale(2); */
+    transition-duration: 10000ms;
 }
 
 #header {
@@ -82,8 +102,27 @@
 
 #text-header {}
 
+#text-wrap {
+    flex: 1 1 auto;
+    margin: 5px 0;
+    font-size: 1.3rem;
+    position: relative;
+}
+
+#text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#text-hidden {
+    color: transparent;
+    text-shadow: 0 0 0 transparent;
+}
+
 #name {
-    /* border-bottom: .5px solid #aaa; */
     width: 20%;
     margin-bottom: 5px;
     text-align: center;
@@ -91,11 +130,6 @@
     font-weight: bold;
 }
 
-#text {
-    flex: 1 1 auto;
-    padding: 5px 0;
-    font-size: 1.3rem;
-}
 
 #text-footer {
     height: 2rem;
@@ -160,6 +194,11 @@
     transition-duration: var(--fade-duration);
 }
 
+#scene-mask.fade.fast {
+    transition-duration: 0;
+}
+
+
 .hide {
     display: none !important;
 }
@@ -177,13 +216,23 @@
     opacity: 1.0;
 }
 
+/* effects */
 .character.swing>img {
     animation: swing linear 100ms 3;
 }
 
-.character.hide-opacity {
+.character>img {
+    transition-duration: 1000ms;
+}
+
+/* states */
+.character.disable>img {
+    opacity: .5;
+    transition-duration: 1000ms;
+}
+
+.hide-opacity {
     opacity: 0.0;
-    /* display: none; */
     transition-duration: 1000ms;
 }
 
@@ -191,6 +240,7 @@
     --swing-distance: 10px;
     --swing-distance-: -10px;
 }
+
 
 @keyframes swing {
     0% {

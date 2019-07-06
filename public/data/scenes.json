@@ -1,0 +1,143 @@
+[{
+    "id": "scene1",
+    "scripts": [{
+        "name": "太郎",
+        "text": "入学したよ",
+        "characters": [{
+            "id": "megumi",
+            "x": 0,
+            "y": 10
+        }, {
+            "id": "eriri",
+            "x": -30,
+            "y": 0
+        }, {
+            "id": "utaha",
+            "x": 30,
+            "y": 0
+        }],
+        "effects": ["pan"],
+        "audios": [{
+            "id": "ban",
+            "time": 0,
+            "volume": 1.0
+        }]
+    }, {
+        "name": "笵 建明",
+        "text": "同学门好!",
+        "characters": [{
+            "id": "megumi",
+            "x": 30,
+            "y": 0,
+            "effects": ["swing"]
+        }]
+    }, {
+        "name": "太郎",
+        "text": "ロウシーハオ",
+        "duration": 1,
+        "characters": [{
+            "id": "eriri",
+            "x": -30,
+            "y": 0,
+            "states": ["disable"]
+        }, {
+            "id": "utaha",
+            "x": 30,
+            "y": 0
+        }]
+    }, {
+        "name": "太郎",
+        "text": "ロウシーハオ",
+        "speed": 1,
+        "characters": [{
+            "id": "eriri",
+            "x": -30,
+            "y": 0
+        }, {
+            "id": "utaha",
+            "x": 30,
+            "y": 0,
+            "states": ["disable"]
+        }]
+    }],
+    "img": "../img/test/DSC_0110.jpg",
+    "choice": [{
+        "label": "部活を見に行く",
+        "scene_id": "scene2"
+    }, {
+        "label": "家に帰る",
+        "scene_id": "scene1"
+    }],
+    "audios": [{
+        "id": "ifu",
+        "time": 0,
+        "volume": 1,
+        "fadein": true
+    }]
+}, {
+    "id": "scene2",
+    "scripts": [{
+        "name": "太郎",
+        "text": "　【ロンドンＡＦＰ時事】ロンドンの競売大手クリスティーズで４日、約３０００年前に制作された古代エジプト王ツタンカーメンの頭像が競売に掛けられ、約６００万ドル（約６億４０００万円）で落札された。落札者は明らかにされていない。エジプト当局は像の売却中止と返還を要求している。"
+    },{
+        "name": "太郎",
+        "text": "入学したよ",
+        "characters": [{
+            "id": "megumi",
+            "x": 40,
+            "y": 0
+        }],
+        "effects": ["pan"],
+        "audios": [{
+            "id": "tirin",
+            "time": 0,
+            "volume": 1.0
+        }]
+    }, {
+        "name": "太郎",
+        "text": "　頭像は珪岩製で高さ２８．５センチ。エジプト考古省関係者は、１９７０年代にルクソールの古代遺跡カルナック神殿から「盗まれた」とみられると主張した。"
+    }, {
+        "name": "太郎",
+        "text": "　エジプト外務省は英外務省と国連教育科学文化機関（ユネスコ）に対し、介入して競売を中止するよう求めた。これに対しクリスティーズは、像の存在は長年にわたり「良く知られ、公然と展示されていた」が、エジプトが懸念を表明したことはなかったと反論している。"
+    }, {
+        "name": "太郎",
+        "text": "　オークション会場前には「密輸された美術品を売買するのはやめろ」などと書かれたカードを掲げた抗議者が集まった。"
+    }],
+    "img": "../img/test/DSC_0116.jpg",
+    "choice": [{
+        "label": "MMAの見学に行く",
+        "scene_id": "mma"
+    }, {
+        "label": "やっぱり家に帰る",
+        "scene_id": "scene1"
+    }, {
+        "label": "生協を見に行く",
+        "scene_id": "seikyo"
+    }],
+    "audios": [{
+        "id": "some",
+        "fadein":true
+    }]
+}, {
+    "id": "seikyo",
+    "scripts": [{
+        "name": "太郎",
+        "text": "入学したよ"
+    }],
+    "img": "../img/test/DSC_0094.jpg",
+    "choice": [{
+        "label": "やっぱり家に帰る",
+        "scene_id": "scene1"
+    }]
+}, {
+    "id": "mma",
+    "scripts": [{
+        "name": "太郎",
+        "text": "MMAに入部しよう"
+    }],
+    "img": "../img/test/DSC_0075.jpg",
+    "choice": [{
+        "label": "やっぱり家に帰る",
+        "scene_id": "scene1"
+    }]
+}]
