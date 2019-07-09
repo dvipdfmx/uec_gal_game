@@ -9,6 +9,7 @@
             "y": 10
         }, {
             "id": "eriri",
+            "diff": "happy",
             "x": -30,
             "y": 0
         }, {
@@ -20,13 +21,14 @@
         "audios": [{
             "id": "ban",
             "time": 0,
-            "volume": 1.0
+            "volume": 0.0
         }]
     }, {
         "name": "笵 建明",
         "text": "同学门好!",
         "characters": [{
-            "id": "megumi",
+            "id": "eriri",
+            "diff": "happy",
             "x": 30,
             "y": 0,
             "effects": ["swing"]
@@ -63,7 +65,12 @@
     "img": "../img/test/DSC_0009.jpg",
     "choice": [{
         "label": "部活を見に行く",
-        "scene_id": "scene2"
+        "scene_id": "scene2",
+        "flags": [{
+            "id": "love",
+            "value": true,
+            "method": "or"
+        }]
     }, {
         "label": "家に帰る",
         "scene_id": "scene1"
@@ -71,7 +78,7 @@
     "audios": [{
         "id": "ifu",
         "time": 0,
-        "volume": 1,
+        "volume": 0,
         "fadein": true
     }]
 }, {
@@ -79,7 +86,7 @@
     "scripts": [{
         "name": "太郎",
         "text": "　【ロンドンＡＦＰ時事】ロンドンの競売大手クリスティーズで４日、約３０００年前に制作された古代エジプト王ツタンカーメンの頭像が競売に掛けられ、約６００万ドル（約６億４０００万円）で落札された。落札者は明らかにされていない。エジプト当局は像の売却中止と返還を要求している。"
-    },{
+    }, {
         "name": "太郎",
         "text": "入学したよ",
         "characters": [{
@@ -106,7 +113,12 @@
     "img": "../img/test/DSC_0116.jpg",
     "choice": [{
         "label": "MMAの見学に行く",
-        "scene_id": "mma"
+        "scene_id": "mma",
+        "onflags": {
+            "value": 0,
+            "method": "all",
+            "ids": ["love"]
+        }
     }, {
         "label": "やっぱり家に帰る",
         "scene_id": "scene1"
@@ -116,7 +128,7 @@
     }],
     "audios": [{
         "id": "some",
-        "fadein":true
+        "fadein": true
     }]
 }, {
     "id": "seikyo",

@@ -42,7 +42,7 @@
     /* transition-duration: 300ms; */
 }
 
-#selectors-wrap {
+#choice-wrap {
     z-index: 3;
     justify-content: center;
     transition-duration: 300ms;
@@ -137,7 +137,7 @@
     justify-content: flex-end;
 }
 
-#selector {
+#choice {
     margin: 10px 20%;
     display: flex;
     justify-content: center;
@@ -174,7 +174,7 @@
     background: var(--primary-active);
 }
 
-#selector button {
+#choice button {
     flex-grow: 1;
 }
 
@@ -215,18 +215,23 @@
     transition-duration: 1000ms;
     opacity: 1.0;
 }
+.character>.character-in>.character-diff{
+    position: absolute;
+    left: 0;
+    top: 0;
+}
 
 /* effects */
-.character.swing>img {
+.character.swing>.character-in {
     animation: swing linear 100ms 3;
 }
 
-.character>img {
+.character>.character-in {
     transition-duration: 1000ms;
 }
 
 /* states */
-.character.disable>img {
+.character.disable>.character-in {
     opacity: .5;
     transition-duration: 1000ms;
 }

@@ -1,13 +1,17 @@
 [{
     "id": "megumi",
-    "img": "https://www.saenai.tv/images/character/chara_megumi_vsl.png"
+    "url": "https://www.saenai.tv/images/character/chara_megumi_vsl.png"
 }, {
     "id": "utaha",
-    "img": "https://www.saenai.tv/images/character/chara_utaha_vsl.png"
+    "url": "https://www.saenai.tv/images/character/chara_utaha_vsl.png"
 }, {
     "id": "eriri",
-    "img": "https://www.saenai.tv/images/character/chara_eriri_vsl.png"
-},{
+    "url": "https://www.saenai.tv/images/character/chara_eriri_vsl.png",
+    "diffs": [{
+        "id": "happy",
+        "url": "../img/diff.png"
+    }]
+}, {
     "id": "human",
-    "img": "../img/human.png"
+    "url": "../img/human.png"
 }]

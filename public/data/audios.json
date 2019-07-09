@@ -13,4 +13,13 @@
 },{
     "id":"tirin",
     "url":"../audio/tirin1.mp3"
+},{
+    "id":"button",
+    "url":"../audio/decision3.mp3"
+},{
+    "id":"button2",
+    "url":"../audio/decision4.mp3"
+},{
+    "id":"button1",
+    "url":"../audio/decision22.mp3"
 }]
