@@ -44,19 +44,7 @@
     <script src="../js/scene.js"></script>
     <script>
         (async () => {
-            const gmdata = await (await fetch('../data/game.json')).json();
-            await Promise.all([
-                Character.load('../data/characters.json'),
-                Audio.load('../data/audios.json'),
-                Scene.load('../data/scenes.json'),
-            ]);
-            Scene.init(new GameManager(gmdata));
-            document.querySelector('#textarea').addEventListener('click', () => {
-                Audio.find('button1').play();
-            });
-            Scene.clear(true);
-            Scene.find('scene1').show();
-            // await document.body.requestFullscreen();
+            await new GameManager().init('../data/game.json', 'scene1');
         })();
     </script>
 </body>

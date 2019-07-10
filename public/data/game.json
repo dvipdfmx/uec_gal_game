@@ -3,5 +3,30 @@
         "love": {
             "value": 0
         }
+    },
+    "constants": {
+        "classes": {
+            "fade": "fade",
+            "hide": "hide",
+            "hide_opacity": "hide-opacity",
+            "choice_button": "gal-btn",
+            "character_in":"character-in",
+            "character_diff":"character-diff",
+            "character":"character"
+
+        },
+        "audios": {
+            "choice_hover": "button",
+            "choice_click": "button2",
+            "textarea_click": "button1"
+        },
+        "selectors": {
+            "textarea": "#textarea"
+        }
+    },
+    "settings": {
+        "characters": "../data/characters.json",
+        "audios": "../data/audios.json",
+        "scenes": "../data/scenes.json"
     }
 }

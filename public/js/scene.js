@@ -61,7 +61,7 @@ const Scene = (function () {
         audios: [{
             id: undefined,
             time: undefined,
-            continue_to: 'scene|script id'
+            // continue_to: 'scene|script id'
         }],
     }) {
         this.script_index = 0;
@@ -74,8 +74,13 @@ const Scene = (function () {
     };
     Scene.current = undefined;
     Scene.initialized = false;
-    Scene.init = function (gm) {
+    Scene.init = function (gm, constants) {
         Scene.gm = gm;
+        Scene.constants = constants;
+        document.querySelector(constants.selectors.textarea).addEventListener('click', () => {
+            Audio.find(constants.audios.textarea_click).play();
+        });
+
         Scene.initialized = true;
     };
     Scene.prototype.show = function () {
@@ -85,24 +90,25 @@ const Scene = (function () {
             this.set_choice(this.choice);
         }
         this.set_image(this.img);
-        R.mask.classList.remove('fade');
+        R.mask.classList.remove(Scene.constants.classes.fade);
         this.set_script(this.scripts[0]);
         if (this.audios) this.set_audios(this.audios);
     };
     Scene.prototype.clear = function () {
-        Scene.prototype.last_script = undefined;
+        this.last_script = undefined;
+        this.last_script_is_choice = false;
         this.script_index = 0;
         this.uneffects();
         if (this.audios) this.unset_audios(this.audios);
     };
     Scene.clear = function (fast = false) {
-        R.mask.classList.add('fade');
+        R.mask.classList.add(Scene.constants.classes.fade);
         Character.hide_all();
         // テキストクリア
         clearInterval(text_show_interval);
         R.text.textContent = '';
         // 選択肢削除
-        while (R.choice.firstChild) R.choice.removeChild(R.choice.firstChild);
+        Scene.clear_choice();
     };
     Scene.find = function (id) {
         return scenes[id];
@@ -127,8 +133,8 @@ const Scene = (function () {
     Scene.prototype.set_script = function (script, wait = 0) {
         if (this.last_script && this.last_script.audios)
             this.unset_audios(this.last_script.audios);
-        R.textarea_wrap.classList.remove('hide');
-        R.choice_wrap.classList.add('hide-opacity');
+        R.textarea_wrap.classList.remove(Scene.constants.classes.hide);
+        R.choice_wrap.classList.add(Scene.constants.classes.hide_opacity);
         // speaker's name
         R.name.textContent = script.name;
         // set hiddentext
@@ -157,18 +163,22 @@ const Scene = (function () {
         this.last_script = script;
     };
     Scene.prototype.next_script = function () {
-        Audio.find('button1').stop();
+        Audio.find(Scene.constants.audios.textarea_click).stop();
         clearInterval(text_show_interval);
-        this.script_index++;
-        if (this.script_index < this.scripts.length) {
-            this.set_script(this.scripts[this.script_index]);
-        } else if (this.script_index == this.scripts.length) {
+        if (this.script_index < this.scripts.length - 1) {
+            if (!this.last_script_is_choice && this.scripts[this.script_index].choice) {
+                this.set_choice(this.scripts[this.script_index].choice);
+                this.last_script_is_choice = true;
+            } else {
+                this.set_script(this.scripts[++this.script_index]);
+                this.last_script_is_choice = false;
+            }
+        } else if (this.script_index == this.scripts.length - 1) {
             this.set_choice(this.choice);
         } else {
-            this.script_index--;
             return;
         }
-        Audio.find('button1').play();
+        Audio.find(Scene.constants.audios.textarea_click).play();
     };
 
     /****************************************
@@ -220,39 +230,49 @@ const Scene = (function () {
      ****************************************/
 
     Scene.prototype.set_choice = function (choice) {
-        R.textarea_wrap.classList.add('hide');
-        R.choice_wrap.classList.remove('hide-opacity');
+        R.textarea_wrap.classList.add(Scene.constants.classes.hide);
+        R.choice_wrap.classList.remove(Scene.constants.classes.hide_opacity);
         const self = this;
         if (choice && choice.length) {
-            R.choice.classList.remove('hide');
+            R.choice.classList.remove(Scene.constants.classes.hide);
             choice.forEach(e => {
                 // フラグ処理
                 if (e.onflags && !Scene.gm.check_flags(e.onflags))
                     return;
 
                 const btn = document.createElement('button');
-                btn.classList.add('gal-btn');
+                btn.classList.add(Scene.constants.classes.choice_button);
                 btn.textContent = e.label;
                 btn.addEventListener('click', () => {
-                    Scene.clear();
-                    self.clear();
-                    setTimeout(() => {
-                        self.show.bind(Scene.find(e.scene_id))();
-                    }, TRANSITION_DURATION);
+                    if (e.scene_id) {
+                        // change scene
+                        Scene.clear();
+                        self.clear();
+                        setTimeout(() => {
+                            self.show.bind(Scene.find(e.scene_id))();
+                        }, TRANSITION_DURATION);
+                    } else {
+                        // goto next script
+                        Scene.clear_choice();
+                        self.next_script();
+                    }
                     // flags
                     if (e.flags) Scene.gm.set_flags(e.flags);
                 });
                 btn.addEventListener('click', () => {
-                    Audio.find('button2').play();
+                    Audio.find(Scene.constants.audios.choice_click).play();
                 });
-                const btnaudio = Audio.find('button');
+                const btnaudio = Audio.find(Scene.constants.audios.choice_hover);
                 btn.onmouseover = btnaudio.play.bind(btnaudio, 1.0, false);
                 btn.onmouseleave = btnaudio.stop.bind(btnaudio, false);
                 R.choice.appendChild(btn);
             });
         } else {
-            R.choice.classList.add('hide');
+            R.choice.classList.add(Scene.constants.classes.hide);
         }
+    };
+    Scene.clear_choice = function () {
+        while (R.choice.firstChild) R.choice.removeChild(R.choice.firstChild);
     };
     Scene.compile = function (scenes_data) {
         scenes_data.map(e => new Scene(e));

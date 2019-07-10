@@ -22,6 +22,42 @@
             "id": "ban",
             "time": 0,
             "volume": 0.0
+        }],
+        "choice": [{
+            "label": "部活を見に行く",
+            "flags": [{
+                "id": "love",
+                "value": true,
+                "method": "or"
+            }]
+        }, {
+            "label": "部活を見に行く",
+            "flags": [{
+                "id": "love",
+                "value": true,
+                "method": "or"
+            }]
+        }, {
+            "label": "部活を見に行く",
+            "flags": [{
+                "id": "love",
+                "value": true,
+                "method": "or"
+            }]
+        }, {
+            "label": "部活を見に行く",
+            "flags": [{
+                "id": "love",
+                "value": true,
+                "method": "or"
+            }]
+        }, {
+            "label": "部活を見に行く",
+            "flags": [{
+                "id": "love",
+                "value": true,
+                "method": "or"
+            }]
         }]
     }, {
         "name": "笵 建明",

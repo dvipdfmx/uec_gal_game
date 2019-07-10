@@ -1,6 +1,5 @@
 const Character = (function () {
     const list = [];
-    const CHARACTER_CLASS = 'character';
     const characters = document.querySelector('#characters');
     const Character = function (data = {
         id: '',
@@ -14,6 +13,9 @@ const Character = (function () {
         list.push(this);
         this.element = this.create();
     };
+    Character.init = function (constants) {
+        Character.constants = constants;
+    };
     Character.find = function (id) {
         for (const c of list) {
             if (c.id == id) return c;
@@ -23,7 +25,7 @@ const Character = (function () {
     Character.prototype.create = function () {
         const div = document.createElement('div');
         const div_in = document.createElement('div');
-        div_in.classList.add('character-in');
+        div_in.classList.add(Character.constants.classes.character_in);
 
         // main
         const image = document.createElement('img');
@@ -33,14 +35,14 @@ const Character = (function () {
         this.diffs && this.diffs.forEach(e => {
             const image = document.createElement('img');
             image.src = e.url;
-            image.classList.add('hide');
-            image.classList.add('character-diff');
+            image.classList.add(Character.constants.classes.hide);
+            image.classList.add(Character.constants.classes.character_diff);
             e.element = image;
             div_in.appendChild(image);
         });
 
-        div.classList.add(CHARACTER_CLASS);
-        div.classList.add('hide-opacity');
+        div.classList.add(Character.constants.classes.character);
+        div.classList.add(Character.constants.classes.hide_opacity);
         div.appendChild(div_in);
         characters.appendChild(div);
         return div;
@@ -49,20 +51,20 @@ const Character = (function () {
         if (!this.diffs) return;
         for (const e of this.diffs) {
             if (diff_id && e.id == diff_id) {
-                e.element.classList.remove('hide');
+                e.element.classList.remove(Character.constants.classes.hide);
             } else {
-                e.element.classList.add('hide');
+                e.element.classList.add(Character.constants.classes.hide);
             }
         }
     };
     Character.prototype.set_position = function (x, y) {
-        this.element.classList.remove('hide-opacity');
+        this.element.classList.remove(Character.constants.classes.hide_opacity);
         this.element.style.left = x + 50 + 'vw';
         this.element.style.top = -y + 50 + 'vh';
     };
     Character.prototype.hide = function () {
         if (this.move_timeout_start) clearTimeout(this.move_timeout_start);
-        this.element.classList.add('hide-opacity');
+        this.element.classList.add(Character.constants.classes.hide_opacity);
         this.uneffects();
         this.unstates();
     };

@@ -1,12 +1,17 @@
 const GameManager = (function () {
-    const GameManager = function (data = {
-        flags: {
-            'id': {
-                value: 0,
-            }
-        }
-    }) {
-        Object.assign(this, data);
+    const GameManager = function () {};
+    GameManager.prototype.init = async function (data_url, start_scene_id) {
+        const gmdata = await (await fetch(data_url)).json();
+        Scene.init(this, gmdata.constants);
+        Character.init(gmdata.constants);
+        await Promise.all([
+            Character.load(gmdata.settings.characters),
+            Audio.load(gmdata.settings.audios),
+            Scene.load(gmdata.settings.scenes),
+        ]);
+        this.flags = gmdata.flags;
+        Scene.clear(true);
+        Scene.find(start_scene_id).show();
     };
 
     /**
