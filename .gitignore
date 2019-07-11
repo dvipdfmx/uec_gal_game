@@ -1,3 +1,5 @@
 test/
 *.mp3
 *.flac
+img/
+scripts/*.md

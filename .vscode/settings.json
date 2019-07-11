@@ -2,5 +2,11 @@
     "json.schemas": [{
         "fileMatch": ["/scenes.json"],
         "url": "./schemas/scenes.schema.json"
+    },{
+        "fileMatch": ["/characters.json"],
+        "url": "./schemas/characters.schema.json"
+    },{
+        "fileMatch": ["/audios.json"],
+        "url": "./schemas/audios.schema.json"
     }]
 }
