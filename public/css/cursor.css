@@ -1,0 +1,19 @@
+.cursor {
+    position: fixed;
+    height: 20px;
+    width: 20px;
+    /* background-color: aqua; */
+    border-radius: 5px;
+    /* margin-top: -20px; */
+    z-index: 1000000;
+    /* background: url(../img/star/1.png); */
+    background-size: cover;
+    border: none;
+    /* transition-duration: 500ms; */
+    opacity: 1;
+}
+
+.hide {
+    transition-duration: 500ms;
+    opacity: 0;
+}

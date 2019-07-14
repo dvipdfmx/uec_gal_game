@@ -98,7 +98,7 @@
             "states": ["disable"]
         }]
     }],
-    "img": "../img/test/DSC_0009.jpg",
+    "img": "../img/anna-jimenez-calaf-DsjPKrzBO0w-unsplash.jpg",
     "choice": [{
         "label": "部活を見に行く",
         "scene_id": "scene2",
@@ -146,7 +146,7 @@
         "name": "太郎",
         "text": "　オークション会場前には「密輸された美術品を売買するのはやめろ」などと書かれたカードを掲げた抗議者が集まった。"
     }],
-    "img": "../img/test/DSC_0116.jpg",
+    "img": "../img/florian-giorgio-8X19catOuNI-unsplash.jpg",
     "choice": [{
         "label": "MMAの見学に行く",
         "scene_id": "mma",
@@ -172,7 +172,7 @@
         "name": "太郎",
         "text": "入学したよ"
     }],
-    "img": "../img/test/DSC_0094.jpg",
+    "img": "../img/ming-jun-tan-o6ICDlt5_2k-unsplash.jpg",
     "choice": [{
         "label": "やっぱり家に帰る",
         "scene_id": "scene1"
@@ -183,7 +183,7 @@
         "name": "太郎",
         "text": "MMAに入部しよう"
     }],
-    "img": "../img/test/DSC_0075.jpg",
+    "img": "../img/lina-angelov-wLYtlT4mPxw-unsplash.jpg",
     "choice": [{
         "label": "やっぱり家に帰る",
         "scene_id": "scene1"
