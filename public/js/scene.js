@@ -229,47 +229,50 @@ const Scene = (function () {
      * Choice
      ****************************************/
 
-    Scene.prototype.set_choice = function (choice) {
+    Scene.prototype.set_choice = function (choice, skip_select = false) {
         R.textarea_wrap.classList.add(Scene.constants.classes.hide);
         R.choice_wrap.classList.remove(Scene.constants.classes.hide_opacity);
-        const self = this;
         if (choice && choice.length) {
             R.choice.classList.remove(Scene.constants.classes.hide);
-            choice.forEach(e => {
-                // フラグ処理
-                if (e.onflags && !Scene.gm.check_flags(e.onflags))
-                    return;
+            const avail_choice = choice.filter(e => e.onflags && !Scene.gm.check_flags(e.onflags));
+            if (skip_select && avail_choice.length == 1) {
 
-                const btn = document.createElement('button');
-                btn.classList.add(Scene.constants.classes.choice_button);
-                btn.textContent = e.label;
-                btn.addEventListener('click', () => {
-                    if (e.scene_id) {
-                        // change scene
-                        Scene.clear();
-                        self.clear();
-                        setTimeout(() => {
-                            self.show.bind(Scene.find(e.scene_id))();
-                        }, TRANSITION_DURATION);
-                    } else {
-                        // goto next script
-                        Scene.clear_choice();
-                        self.next_script();
-                    }
-                    // flags
-                    if (e.flags) Scene.gm.set_flags(e.flags);
-                });
-                btn.addEventListener('click', () => {
-                    Audio.find(Scene.constants.audios.choice_click).play();
-                });
-                const btnaudio = Audio.find(Scene.constants.audios.choice_hover);
-                btn.onmouseover = btnaudio.play.bind(btnaudio, 1.0, false);
-                btn.onmouseleave = btnaudio.stop.bind(btnaudio, false);
-                R.choice.appendChild(btn);
-            });
+            } else {
+                avail_choice.forEach(e => R.choice.appendChild(this.create_one_choice(e)));
+            }
         } else {
             R.choice.classList.add(Scene.constants.classes.hide);
         }
+    };
+    Scene.prototype.create_one_choice = function (e) {
+        const self = this;
+        const btn = document.createElement('button');
+        btn.classList.add(Scene.constants.classes.choice_button);
+        btn.textContent = e.label;
+        btn.addEventListener('click', () => {
+            if (e.scene_id) {
+                // change scene
+                Scene.clear();
+                self.clear();
+                setTimeout(() => {
+                    self.show.bind(Scene.find(e.scene_id))();
+                }, TRANSITION_DURATION);
+            } else {
+                // goto next script
+                Scene.clear_choice();
+                self.next_script();
+            }
+            // flags
+            if (e.flags) Scene.gm.set_flags(e.flags);
+        });
+        btn.addEventListener('click', () => {
+            Audio.find(Scene.constants.audios.choice_click).play();
+        });
+        const btnaudio = Audio.find(Scene.constants.audios.choice_hover);
+        btn.onmouseover = btnaudio.play.bind(btnaudio, 1.0, false);
+        btn.onmouseleave = btnaudio.stop.bind(btnaudio, false);
+        R.choice.appendChild(btn);
+        return btn;
     };
     Scene.clear_choice = function () {
         while (R.choice.firstChild) R.choice.removeChild(R.choice.firstChild);

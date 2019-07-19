@@ -99,10 +99,11 @@
         }]
     }],
     "img": "../img/anna-jimenez-calaf-DsjPKrzBO0w-unsplash.jpg",
+    "skipselect": true,
     "choice": [{
         "label": "部活を見に行く",
         "scene_id": "scene2",
-        "flags": [{
+        "onflags": [{
             "id": "love",
             "value": true,
             "method": "or"
