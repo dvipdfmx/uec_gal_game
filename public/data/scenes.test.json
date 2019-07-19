@@ -99,11 +99,10 @@
         }]
     }],
     "img": "../img/anna-jimenez-calaf-DsjPKrzBO0w-unsplash.jpg",
-    "skipselect": true,
     "choice": [{
         "label": "部活を見に行く",
         "scene_id": "scene2",
-        "onflags": [{
+        "flags": [{
             "id": "love",
             "value": true,
             "method": "or"
@@ -148,6 +147,7 @@
         "text": "　オークション会場前には「密輸された美術品を売買するのはやめろ」などと書かれたカードを掲げた抗議者が集まった。"
     }],
     "img": "../img/florian-giorgio-8X19catOuNI-unsplash.jpg",
+    "skip_select": true,
     "choice": [{
         "label": "MMAの見学に行く",
         "scene_id": "mma",
@@ -156,9 +156,6 @@
             "method": "all",
             "ids": ["love"]
         }
-    }, {
-        "label": "やっぱり家に帰る",
-        "scene_id": "scene1"
     }, {
         "label": "生協を見に行く",
         "scene_id": "seikyo"
