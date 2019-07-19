@@ -1,12 +1,13 @@
 :root {
     --primary-gray: #555;
-    --primary-gray-transparent: #77777777;
+    --primary-gray-transparent: #e793e799;
     --primary-text-shadow: black;
     --primary-text: #ccc;
-    --primary-hover: #55555577;
-    --primary-active: #55555599;
+    --primary-hover: #f786f799;
+    --primary-active: #f786f799;
     --primary-hover-border: #333;
     --fade-duration: 2000ms;
+    user-select: none !important;
 }
 
 #main {
@@ -51,21 +52,42 @@
 #textarea {
     margin: 2rem 20%;
     padding: 30px;
+    box-shadow: 0 0 30px var(--primary-hover-border);
+
     background: var(--primary-gray-transparent);
     color: #ccc;
     border-radius: 15px;
     min-height: 8rem;
-    box-shadow: 0 0 30px var(--primary-gray);
     user-select: none;
     cursor: pointer;
     display: flex;
     flex-direction: column;
-    text-shadow: 0 0 10px var(--primary-text-shadow);
+
     font-size: large;
+    font-weight: bold;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+#textarea,
+#choice>* {
+    text-shadow: 1px 1px 0 var(--primary-text-shadow), -1px -1px 0 var(--primary-text-shadow),
+        -1px 1px 0 var(--primary-text-shadow), 1px -1px 0 var(--primary-text-shadow),
+        0px 1px 0 var(--primary-text-shadow), 0 -1px 0 var(--primary-text-shadow),
+        -1px 0 0 var(--primary-text-shadow), 1px 0 0 var(--primary-text-shadow),
+        0 0 10px var(--primary-text-shadow);
+}
+
+#textarea::before {
+    content: '';
+    background: inherit;
+    filter: blur(5px);
+    z-index: -1;
 }
 
 #textarea:hover {
-    box-shadow: 0 0 30px var(--primary-hover-border);
+    box-shadow: 0 0 100px var(--primary-gray-transparent);
+
 }
 
 #background {
@@ -139,12 +161,14 @@
     margin: 10px 20%;
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
+    flex-direction: column;
 }
 
 .gal-btn {
     margin: 10px;
     padding: 10px;
+    background: #9891f3d0;
     background: var(--primary-gray-transparent);
     color: var(--primary-text);
     border: 1px solid transparent;
@@ -189,7 +213,7 @@
 }
 
 #scene-mask.fade {
-    z-index: 5;
+    z-index: 15;
     background: black;
     transition-duration: var(--fade-duration);
 }
@@ -215,7 +239,8 @@
     transition-duration: 1000ms;
     opacity: 1.0;
 }
-.character>.character-in>.character-diff{
+
+.character>.character-in>.character-diff {
     position: absolute;
     left: 0;
     top: 0;

@@ -12,7 +12,7 @@
 
 <body>
     <div id="main">
-        <div id="scene-mask"></div>
+        <div id="scene-mask" class="fade"></div>
         <div id="header" style="grid-row: 1;">
         </div>
         <div id="scene" style="grid-row: 2;">
@@ -37,16 +37,18 @@
             </div>
         </div>
         <div id="footer" style="grid-row: 3;"></div>
-        <img id="background" src="../img/sea.jpg"></img>
+        <img id="background"></img>
     </div>
     <script src="../js/gamemanager.js"></script>
     <script src="../js/audio.js"></script>
     <script src="../js/character.js"></script>
     <script src="../js/scene.js"></script>
+    <script src="../js/color_console.js"></script>
     <!-- <script src="../js/cursor.js"></script> -->
     <script>
         (async () => {
-            await new GameManager().init('../data/game.json', 'scene1');
+            const gm = new GameManager();
+            await gm.init(data_url = '../data/game.json', start = 'scene1');
         })();
     </script>
 </body>

@@ -1,7 +1,10 @@
 const GameManager = (function () {
+    // R = {};
+    let gmdata = undefined;
     const GameManager = function () {};
+
     GameManager.prototype.init = async function (data_url, start_scene_id) {
-        const gmdata = await (await fetch(data_url)).json();
+        gmdata = await (await fetch(data_url)).json();
         Scene.init(this, gmdata.constants);
         Character.init(gmdata.constants);
         await Promise.all([
@@ -10,6 +13,7 @@ const GameManager = (function () {
             Scene.load(gmdata.settings.scenes),
         ]);
         this.flags = gmdata.flags;
+        // R.mask = document.querySelector(gmdata.constants.selectors.scene_mask);
         Scene.clear(true);
         Scene.find(start_scene_id).show();
     };
@@ -22,7 +26,7 @@ const GameManager = (function () {
         value: true,
         method: 'and',
     }) {
-        console.log('FLAG', data);
+        const tmp = this.flags[data.id].value;
         switch (data.method) {
             case 'and':
                 this.flags[data.id].value &= data.value;
@@ -34,6 +38,7 @@ const GameManager = (function () {
                 this.flags[data.id].value ^= data.value;
                 break;
         }
+        console.flag(`Set flag: ${data.id} : ${tmp} -> ${this.flags[data.id].value}`);
     };
     GameManager.prototype.set_flags = function (flags) {
         flags.forEach(e => this.set_flag(e));
@@ -63,6 +68,15 @@ const GameManager = (function () {
                 return this.flags_some(data.ids, data.value);
         }
     };
+
+
+    // GameManager.prototype.start = function () {
+    //     R.mask.classList.remove(gmdata.classes.fade);
+    // };
+
+    // GameManager.prototype.end = function () {
+    //     R.mask.classList.add(gmdata.classes.fade);
+    // };
 
 
     return GameManager;

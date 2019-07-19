@@ -119,6 +119,7 @@ const Scene = (function () {
         R.mask.classList.remove(Scene.constants.classes.fade);
         this.set_script(this.scripts[0]);
         if (this.audios) this.set_audios(this.audios);
+        console.ok(`Entered Scene '${this.id}'`);
     };
     /**
      * シーンの終了処理（シーンごと）
@@ -253,7 +254,7 @@ const Scene = (function () {
     /****************************************
      * Character
      ****************************************/
-    
+
     // 複数のキャラクターを配置する
     Scene.prototype.set_characters = function (characters_data) {
         Character.hide_all();
@@ -277,8 +278,9 @@ const Scene = (function () {
         if (choice && choice.length) {
             R.choice.classList.remove(Scene.constants.classes.hide);
             const avail_choice = choice.filter(e => !e.onflags || Scene.gm.check_flags(e.onflags));
-            console.log(avail_choice);
+            // console.log(avail_choice);
             if (skip_select && avail_choice.length === 1) {
+                console.ok('Skip selection');
                 this.advance_scene(avail_choice[0]);
             } else {
                 avail_choice.forEach(e => R.choice.appendChild(this.create_one_choice(e)));
@@ -299,7 +301,7 @@ const Scene = (function () {
         return btn;
     };
     Scene.prototype.advance_scene = function (e) {
-        if (e.scene_id)
+        if (e.scene_id || e.link)
             this.choice_change_scene(e);
         else
             this.choice_next_script();
@@ -308,11 +310,17 @@ const Scene = (function () {
     Scene.prototype.choice_change_scene = function (e) {
         Scene.clear();
         this.clear();
+        console.select(e.link ? `Redirect to '${e.link}'` : `Selected scene '${e.scene_id}'`);
         setTimeout(() => {
-            this.show.bind(Scene.find(e.scene_id))();
+            if (e.link) {
+                location.href = e.link;
+            } else {
+                this.show.bind(Scene.find(e.scene_id))();
+            }
         }, TRANSITION_DURATION);
     };
     Scene.prototype.choice_next_script = function () {
+        console.ok('Go to next script');
         Scene.clear_choice();
         this.next_script();
     };

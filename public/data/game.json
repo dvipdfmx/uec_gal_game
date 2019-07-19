@@ -13,7 +13,6 @@
             "character_in": "character-in",
             "character_diff": "character-diff",
             "character": "character"
-
         },
         "audios": {
             "choice_hover": "button",
@@ -21,7 +20,8 @@
             "textarea_click": "button1"
         },
         "selectors": {
-            "textarea": "#textarea"
+            "textarea": "#textarea",
+            "scene_mask": "#scene-mask"
         }
     },
     "settings": {

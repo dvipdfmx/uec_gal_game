@@ -24,35 +24,21 @@
             "volume": 0.0
         }],
         "choice": [{
-            "label": "部活を見に行く",
+            "label": "for i in *;do echo i;done;",
             "flags": [{
                 "id": "love",
-                "value": true,
-                "method": "or"
+                "value": false,
+                "method": "and"
             }]
         }, {
-            "label": "部活を見に行く",
+            "label": "for i in *;echo i;done;",
             "flags": [{
                 "id": "love",
-                "value": true,
-                "method": "or"
+                "value": false,
+                "method": "and"
             }]
         }, {
-            "label": "部活を見に行く",
-            "flags": [{
-                "id": "love",
-                "value": true,
-                "method": "or"
-            }]
-        }, {
-            "label": "部活を見に行く",
-            "flags": [{
-                "id": "love",
-                "value": true,
-                "method": "or"
-            }]
-        }, {
-            "label": "部活を見に行く",
+            "label": "for i in *;do echo $i;done;",
             "flags": [{
                 "id": "love",
                 "value": true,
@@ -173,8 +159,8 @@
     }],
     "img": "../img/ming-jun-tan-o6ICDlt5_2k-unsplash.jpg",
     "choice": [{
-        "label": "やっぱり家に帰る",
-        "scene_id": "scene1"
+        "label": "MMA",
+        "scene_id": "mma"
     }]
 }, {
     "id": "mma",
@@ -183,8 +169,8 @@
         "text": "MMAに入部しよう"
     }],
     "img": "../img/lina-angelov-wLYtlT4mPxw-unsplash.jpg",
+    "skip_select": true,
     "choice": [{
-        "label": "やっぱり家に帰る",
-        "scene_id": "scene1"
+        "link": "./goodend.html"
     }]
 }]
