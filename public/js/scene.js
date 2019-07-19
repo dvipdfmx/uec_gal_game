@@ -1,7 +1,18 @@
 // css :root --face-durationと同じにする
 const TRANSITION_DURATION = 2000;
+/**
+ * シーンに関する処理を行うクラス
+ * @class
+ */
 const Scene = (function () {
+    /**
+     * シーン登録用map
+     * ここからfindする
+     */
     const scenes = {};
+    /**
+     * UI
+     */
     const R = {
         background: document.querySelector('#background'),
         mask: document.querySelector('#scene-mask'),
@@ -17,7 +28,10 @@ const Scene = (function () {
         choice_wrap: document.querySelector('#choice-wrap'),
     };
     let text_show_interval = 0;
-
+    /**
+     * テキストの表示スピード (ms/char)
+     * @type {number}
+     */
     const TEXT_SHOW_SPEED = 30;
 
     const Scene = function (data = {
@@ -68,8 +82,21 @@ const Scene = (function () {
         this.script_index = 0;
         scenes[this.id] = this;
     };
+    /**
+     * 現在表示中のシーンの参照
+     * @type {Scene}
+     */
     Scene.current = undefined;
+    /**
+     * 初期化されているかどうか
+     * @type {boolean}
+     */
     Scene.initialized = false;
+    /**
+     * 初期化
+     * @param {GameManager} gm ゲームマネージャインスタンスの参照
+     * @param {Object} constants 定数パラメータ
+     */
     Scene.init = function (gm, constants) {
         Scene.gm = gm;
         Scene.constants = constants;
@@ -79,6 +106,9 @@ const Scene = (function () {
 
         Scene.initialized = true;
     };
+    /**
+     * シーンを表示する
+     */
     Scene.prototype.show = function () {
         Scene.current = this;
         R.textarea.onclick = this.next_script.bind(this);
@@ -90,6 +120,9 @@ const Scene = (function () {
         this.set_script(this.scripts[0]);
         if (this.audios) this.set_audios(this.audios);
     };
+    /**
+     * シーンの終了処理（シーンごと）
+     */
     Scene.prototype.clear = function () {
         this.last_script = undefined;
         this.last_script_is_choice = false;
@@ -97,6 +130,9 @@ const Scene = (function () {
         this.uneffects();
         if (this.audios) this.unset_audios(this.audios);
     };
+    /**
+     * シーンの終了処理（static）
+     */
     Scene.clear = function (fast = false) {
         R.mask.classList.add(Scene.constants.classes.fade);
         Character.hide_all();
@@ -106,6 +142,10 @@ const Scene = (function () {
         // 選択肢削除
         Scene.clear_choice();
     };
+    /**
+     * シーンを検索する
+     * @param {string} id シーンID
+     */
     Scene.find = function (id) {
         return scenes[id];
     };
@@ -113,9 +153,16 @@ const Scene = (function () {
     /****************************************
      * Background
      ****************************************/
+    /**
+     * 背景画像を設定する
+     * @param {string} url 画像のURL
+     */
     Scene.prototype.set_image = function (url) {
         R.background.src = url;
     };
+    /**
+     * 背景画像の効果を適用する（複数）
+     */
     Scene.prototype.effects = function (types) {
         types.forEach(e => R.background.classList.add(e));
     };
@@ -131,30 +178,26 @@ const Scene = (function () {
             this.unset_audios(this.last_script.audios);
         R.textarea_wrap.classList.remove(Scene.constants.classes.hide);
         R.choice_wrap.classList.add(Scene.constants.classes.hide_opacity);
-        // speaker's name
         R.name.textContent = script.name;
-        // set hiddentext
         R.text_hidden.textContent = script.text;
         const str_len = script.text.length;
         let char_index = 0;
-        // 文字を順次表示
         setTimeout(() => {
             text_show_interval = setInterval((() => {
                 const f = () => {
                     R.text.textContent = script.text.slice(0, ++char_index);
-                    if (char_index == str_len) {
+                    if (char_index == str_len)
                         clearInterval(text_show_interval);
-                    }
                 };
                 return (f(), f);
             })(), script.speed || TEXT_SHOW_SPEED);
             if (script.audios) this.set_audios(script.audios);
         }, wait);
         setTimeout(() => {
-            // キャラクターの表示
             this.uneffects();
             this.set_characters(script.characters || []);
             if (script.effects) this.effects(script.effects);
+            if (script.img) this.set_image(script.img);
         }, 0);
         this.last_script = script;
     };
@@ -210,6 +253,8 @@ const Scene = (function () {
     /****************************************
      * Character
      ****************************************/
+    
+    // 複数のキャラクターを配置する
     Scene.prototype.set_characters = function (characters_data) {
         Character.hide_all();
         characters_data.forEach(e => this.set_character(e));

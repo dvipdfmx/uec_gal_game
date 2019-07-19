@@ -78,8 +78,6 @@
 }
 
 #background.pan {
-}
-#background.pan {
     /* transform */
     transform: scale(2);
     /* transform: translateX(-100%) scale(2); */
