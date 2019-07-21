@@ -4,6 +4,16 @@ const GameManager = (function () {
     const GameManager = function () {};
 
     GameManager.prototype.init = async function (data_url, start_scene_id) {
+        // let loading_i = 0;
+        // const loading = setInterval(() => {
+        //     document.querySelector(gmdata.constants.selectors.loading_content).innerHTML = 'Now loading' + '.'.repeat(loading_i) + '&emsp;'.repeat(3 - loading_i);
+        //     if (loading_i === 3) {
+        //         loading_i = 0;
+        //     } else {
+        //         loading_i++;
+        //     }
+        // }, 10);
+
         gmdata = await (await fetch(data_url)).json();
         Scene.init(this, gmdata.constants);
         Scene.clear(true);
@@ -15,11 +25,12 @@ const GameManager = (function () {
             Scene.load(gmdata.settings.scenes),
         ]);
         this.flags = gmdata.flags;
-        // R.mask = document.querySelector(gmdata.constants.selectors.scene_mask);
         await Background.waitload();
         await Character.waitload();
         await Audio.waitload();
         console.err('All Contents Loaded');
+        // clearInterval(loading);
+        document.querySelector(gmdata.constants.selectors.loading).classList.add(gmdata.constants.classes.hide);
         Scene.find(start_scene_id).show();
     };
 
@@ -43,7 +54,7 @@ const GameManager = (function () {
                 this.flags[data.id].value ^= data.value;
                 break;
         }
-        console.flag(`Set flag: ${data.id} : ${tmp} -> ${this.flags[data.id].value}`);
+        console.flag(`Set flag: '${data.id}' : ${tmp} -> ${this.flags[data.id].value}`);
     };
     GameManager.prototype.set_flags = function (flags) {
         flags.forEach(e => this.set_flag(e));

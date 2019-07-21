@@ -32,7 +32,7 @@ const Scene = (function () {
      * テキストの表示スピード (ms/char)
      * @type {number}
      */
-    const TEXT_SHOW_SPEED = 30;
+    const TEXT_SHOW_SPEED = 10;
 
     const Scene = function (data = {
         id: undefined,

@@ -21,9 +21,11 @@
             "textarea_click": "button1"
         },
         "selectors": {
-            "backgrounds":"#backgrounds",
+            "backgrounds": "#backgrounds",
             "textarea": "#textarea",
-            "scene_mask": "#scene-mask"
+            "scene_mask": "#scene-mask",
+            "loading": "#loading",
+            "loading_content": "#loading_content"
         }
     },
     "settings": {
