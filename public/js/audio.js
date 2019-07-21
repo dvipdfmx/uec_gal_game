@@ -1,21 +1,35 @@
 const Audio = (function () {
     const dict = {};
     const audioel = document.querySelector('#audios');
+    const load_promises = [];
     const Audio = function (data = {
         id: undefined,
         url: undefined,
     }) {
         Object.assign(this, data);
-        this.element = this.create();
+        this.audio = new window.Audio(data.url);
+        const self = this;
+        load_promises.push(new Promise((res, rej) => {
+            self.audio.addEventListener('canplaythrough', res);
+            self.audio.addEventListener('error', rej);
+        }));
+        this.element = this.audio; //this.create();
         dict[this.id] = this;
     };
-    Audio.prototype.create = function () {
-        const audio = document.createElement('audio');
-        audio.src = this.url;
-        audio.preload = 'auto';
-        audioel.appendChild(audio);
-        return audio;
+    Audio.waitload = function () {
+        return Promise.all(load_promises);
     };
+    // Audio.prototype.create = function () {
+    //     const audio = document.createElement('audio');
+    //     audio.src = this.url;
+    //     audio.preload = 'auto';
+    //     load_promises.push(new Promise((res, rej) => {
+    //         audio.addEventListener('load', res);
+    //         audio.addEventListener('error', rej);
+    //     }));
+    //     audioel.appendChild(audio);
+    //     return audio;
+    // };
     Audio.compile = function (audios_data) {
         audios_data.forEach(e => new Audio(e));
     };

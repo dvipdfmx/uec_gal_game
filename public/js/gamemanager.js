@@ -6,7 +6,9 @@ const GameManager = (function () {
     GameManager.prototype.init = async function (data_url, start_scene_id) {
         gmdata = await (await fetch(data_url)).json();
         Scene.init(this, gmdata.constants);
+        Scene.clear(true);
         Character.init(gmdata.constants);
+        Background.init(gmdata.constants);
         await Promise.all([
             Character.load(gmdata.settings.characters),
             Audio.load(gmdata.settings.audios),
@@ -14,7 +16,10 @@ const GameManager = (function () {
         ]);
         this.flags = gmdata.flags;
         // R.mask = document.querySelector(gmdata.constants.selectors.scene_mask);
-        Scene.clear(true);
+        await Background.waitload();
+        await Character.waitload();
+        await Audio.waitload();
+        console.err('All Contents Loaded');
         Scene.find(start_scene_id).show();
     };
 

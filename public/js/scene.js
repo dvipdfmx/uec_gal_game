@@ -81,6 +81,13 @@ const Scene = (function () {
         Object.assign(this, data);
         this.script_index = 0;
         scenes[this.id] = this;
+        // register images
+        if (data.img) new Background(data.img);
+        if (data.scripts) {
+            for (const script of data.scripts) {
+                if (script.img) new Background(script.img);
+            }
+        }
     };
     /**
      * 現在表示中のシーンの参照
@@ -101,9 +108,10 @@ const Scene = (function () {
         Scene.gm = gm;
         Scene.constants = constants;
         document.querySelector(constants.selectors.textarea).addEventListener('click', () => {
-            Audio.find(constants.audios.textarea_click).play();
+            const audio = Audio.find(constants.audios.textarea_click);
+            audio.stop();
+            audio.play();
         });
-
         Scene.initialized = true;
     };
     /**
@@ -159,16 +167,17 @@ const Scene = (function () {
      * @param {string} url 画像のURL
      */
     Scene.prototype.set_image = function (url) {
-        R.background.src = url;
+        this.current_background = Background.find(url);
+        this.current_background.show();
     };
     /**
      * 背景画像の効果を適用する（複数）
      */
     Scene.prototype.effects = function (types) {
-        types.forEach(e => R.background.classList.add(e));
+        this.current_background.effects(types);
     };
     Scene.prototype.uneffects = function () {
-        R.background.className = '';
+        this.current_background.uneffects();
     };
 
     /****************************************
