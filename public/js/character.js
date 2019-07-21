@@ -43,7 +43,7 @@ const Character = (function () {
             image.classList.add(Character.constants.classes.character_diff);
             load_promises.push(new Promise((res, rej) => {
                 image.addEventListener('load', res);
-                image.addEventListener('error', rej);
+                image.addEventListener('error', res);
             }));
             e.element = image;
             div_in.appendChild(image);

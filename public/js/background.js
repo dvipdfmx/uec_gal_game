@@ -25,7 +25,7 @@ const Background = (function () {
         R.backgrounds.appendChild(img);
         load_promises.push(new Promise((res, rej) => {
             img.addEventListener('load', res);
-            img.addEventListener('error', rej);
+            img.addEventListener('error', res);
         }));
         return img;
     }

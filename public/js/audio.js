@@ -11,7 +11,7 @@ const Audio = (function () {
         const self = this;
         load_promises.push(new Promise((res, rej) => {
             self.audio.addEventListener('canplaythrough', res);
-            self.audio.addEventListener('error', rej);
+            self.audio.addEventListener('error', res);
         }));
         this.element = this.audio; //this.create();
         dict[this.id] = this;
