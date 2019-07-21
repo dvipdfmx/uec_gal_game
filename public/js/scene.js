@@ -108,7 +108,9 @@ const Scene = (function () {
         Scene.gm = gm;
         Scene.constants = constants;
         document.querySelector(constants.selectors.textarea).addEventListener('click', () => {
-            Audio.find(constants.audios.textarea_click).play();
+            const audio = Audio.find(constants.audios.textarea_click);
+            audio.stop();
+            audio.play();
         });
         Scene.initialized = true;
     };

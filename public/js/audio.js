@@ -19,17 +19,17 @@ const Audio = (function () {
     Audio.waitload = function () {
         return Promise.all(load_promises);
     };
-    Audio.prototype.create = function () {
-        const audio = document.createElement('audio');
-        audio.src = this.url;
-        audio.preload = 'auto';
-        load_promises.push(new Promise((res, rej) => {
-            audio.addEventListener('load', res);
-            audio.addEventListener('error', rej);
-        }));
-        audioel.appendChild(audio);
-        return audio;
-    };
+    // Audio.prototype.create = function () {
+    //     const audio = document.createElement('audio');
+    //     audio.src = this.url;
+    //     audio.preload = 'auto';
+    //     load_promises.push(new Promise((res, rej) => {
+    //         audio.addEventListener('load', res);
+    //         audio.addEventListener('error', rej);
+    //     }));
+    //     audioel.appendChild(audio);
+    //     return audio;
+    // };
     Audio.compile = function (audios_data) {
         audios_data.forEach(e => new Audio(e));
     };

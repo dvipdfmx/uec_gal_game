@@ -19,6 +19,7 @@ const GameManager = (function () {
         await Background.waitload();
         await Character.waitload();
         await Audio.waitload();
+        console.err('All Contents Loaded');
         Scene.find(start_scene_id).show();
     };
 
