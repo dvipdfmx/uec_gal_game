@@ -161,6 +161,10 @@
     "choice": [{
         "label": "MMA",
         "scene_id": "mma"
+    }],
+    "audios": [{
+        "id": "stream",
+        "fadein": true
     }]
 }, {
     "id": "mma",
@@ -172,5 +176,9 @@
     "skip_select": true,
     "choice": [{
         "link": "./goodend.html"
+    }],
+    "audios": [{
+        "id": "cat",
+        "fadein": true
     }]
 }]

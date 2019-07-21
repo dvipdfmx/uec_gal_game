@@ -2,14 +2,17 @@
     "id": "ban",
     "url": "../audio/ban1.mp3"
 },{
-    "id":"gotiusa",
-    "url":"../audio/donotupload/gotiusa.mp3"
+    "id":"stream",
+    "url":"../audio/Stream.mp3"
 },{
     "id":"ifu",
-    "url":"../audio/donotupload/ifu.flac"
+    "url":"../audio/CLAP!.mp3"
+},{
+    "id":"cat",
+    "url":"../audio/Cat_life.mp3"
 },{
     "id":"some",
-    "url":"../audio/donotupload/some.mp3"
+    "url":"../audio/パステルハウス.mp3"
 },{
     "id":"tirin",
     "url":"../audio/tirin1.mp3"
