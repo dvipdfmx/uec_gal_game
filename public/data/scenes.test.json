@@ -101,7 +101,7 @@
     "audios": [{
         "id": "ifu",
         "time": 0,
-        "volume": 0,
+        "volume": 1,
         "fadein": true
     }]
 }, {

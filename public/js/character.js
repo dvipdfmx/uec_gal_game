@@ -1,6 +1,7 @@
 const Character = (function () {
     const list = [];
     const characters = document.querySelector('#characters');
+    const load_promises = [];
     const Character = function (data = {
         id: '',
         url: '',
@@ -22,6 +23,9 @@ const Character = (function () {
         }
         return null;
     };
+    Character.waitload = function () {
+        return Promise.all(load_promises);
+    };
     Character.prototype.create = function () {
         const div = document.createElement('div');
         const div_in = document.createElement('div');
@@ -37,6 +41,10 @@ const Character = (function () {
             image.src = e.url;
             image.classList.add(Character.constants.classes.hide);
             image.classList.add(Character.constants.classes.character_diff);
+            load_promises.push(new Promise((res, rej) => {
+                image.addEventListener('load', res);
+                image.addEventListener('error', rej);
+            }));
             e.element = image;
             div_in.appendChild(image);
         });

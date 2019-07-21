@@ -110,7 +110,6 @@ const Scene = (function () {
         document.querySelector(constants.selectors.textarea).addEventListener('click', () => {
             Audio.find(constants.audios.textarea_click).play();
         });
-
         Scene.initialized = true;
     };
     /**

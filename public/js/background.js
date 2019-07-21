@@ -4,6 +4,7 @@ const Background = (function () {
     const R = {
         backgrounds: undefined
     };
+    const load_promises = [];
     const Background = function (url) {
         this.element = Background.create(url);
         this.url = url;
@@ -13,12 +14,19 @@ const Background = (function () {
         constants = _constants;
         R.backgrounds = document.querySelector(constants.selectors.backgrounds);
     };
+    Background.waitload = function () {
+        return Promise.all(load_promises);
+    };
     Background.create = function (url) {
         const img = document.createElement('img');
         img.src = url;
         img.classList.add(constants.classes.hide);
         img.classList.add(constants.classes.background);
         R.backgrounds.appendChild(img);
+        load_promises.push(new Promise((res, rej) => {
+            img.addEventListener('load', res);
+            img.addEventListener('error', rej);
+        }));
         return img;
     }
     Background.find = function (url) {
