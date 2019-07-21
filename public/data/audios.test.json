@@ -1,28 +1,32 @@
 [{
     "id": "ban",
     "url": "../audio/ban1.mp3"
-},{
-    "id":"stream",
-    "url":"../audio/Stream.mp3"
-},{
-    "id":"ifu",
-    "url":"../audio/CLAP!.mp3"
-},{
-    "id":"cat",
-    "url":"../audio/Cat_life.mp3"
-},{
-    "id":"some",
-    "url":"../audio/パステルハウス.mp3"
-},{
-    "id":"tirin",
-    "url":"../audio/tirin1.mp3"
-},{
-    "id":"button",
-    "url":"../audio/decision3.mp3"
-},{
-    "id":"button2",
-    "url":"../audio/decision4.mp3"
-},{
-    "id":"button1",
-    "url":"../audio/decision22.mp3"
+}, {
+    "id": "stream",
+    "url": "../audio/Stream.mp3",
+    "loop": true
+}, {
+    "id": "ifu",
+    "url": "../audio/CLAP!.mp3",
+    "loop": true
+}, {
+    "id": "cat",
+    "url": "../audio/Cat_life.mp3",
+    "loop": true
+}, {
+    "id": "some",
+    "url": "../audio/パステルハウス.mp3",
+    "loop": true
+}, {
+    "id": "tirin",
+    "url": "../audio/tirin1.mp3"
+}, {
+    "id": "button",
+    "url": "../audio/decision3.mp3"
+}, {
+    "id": "button2",
+    "url": "../audio/decision4.mp3"
+}, {
+    "id": "button1",
+    "url": "../audio/decision22.mp3"
 }]

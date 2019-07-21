@@ -10,7 +10,7 @@
     <title>ギャルゲー</title>
 </head>
 
-<body>
+<body oncontextmenu="return false;">
     <div id="loading">
         <div id="loading_content">NOW LOADING...</div>
     </div>
@@ -42,7 +42,7 @@
         <div id="footer" style="grid-row: 3;"></div>
         <div id="backgrounds"></div>
     </div>
-    
+
     <script src="../js/gamemanager.js"></script>
     <script src="../js/audio.js"></script>
     <script src="../js/character.js"></script>
@@ -50,11 +50,13 @@
     <script src="../js/scene.js"></script>
     <script src="../js/color_console.js"></script>
     <script>
-        console.log('%cUEC GAL GAME','font-size:xx-large;color:lightseagreen');
-        (async () => {
-            const gm = new GameManager();
-            await gm.init(data_url = '../data/game.json', start = 'scene1');
-        })();
+        // document.querySelector('#loading').addEventListener('click', () => {
+            console.log('%cUEC GAL GAME', 'font-size:xx-large;color:lightseagreen');
+            (async () => {
+                const gm = new GameManager();
+                await gm.init(data_url = '../data/game.json', start = 'scene1');
+            })();
+        // });
     </script>
 </body>
 

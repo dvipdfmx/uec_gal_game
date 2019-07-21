@@ -8,6 +8,7 @@ const Audio = (function () {
     }) {
         Object.assign(this, data);
         this.audio = new window.Audio(data.url);
+        this.audio.loop = data.loop;
         const self = this;
         load_promises.push(new Promise((res, rej) => {
             self.audio.addEventListener('canplaythrough', res);

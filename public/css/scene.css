@@ -7,6 +7,8 @@
     --primary-active: #f786f799;
     --primary-hover-border: #333;
     --fade-duration: 2000ms;
+    --swing-distance: 10px;
+    --swing-distance-: -10px;
     user-select: none !important;
 }
 
@@ -78,8 +80,8 @@
 
     font-size: large;
     font-weight: bold;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    /* backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); */
 }
 
 #textarea,
@@ -283,10 +285,7 @@
     transition-duration: 1000ms;
 }
 
-:root {
-    --swing-distance: 10px;
-    --swing-distance-: -10px;
-}
+
 
 
 @keyframes swing {
