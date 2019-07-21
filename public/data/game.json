@@ -12,7 +12,8 @@
             "choice_button": "gal-btn",
             "character_in": "character-in",
             "character_diff": "character-diff",
-            "character": "character"
+            "character": "character",
+            "background": "background"
         },
         "audios": {
             "choice_hover": "button",
@@ -20,6 +21,7 @@
             "textarea_click": "button1"
         },
         "selectors": {
+            "backgrounds":"#backgrounds",
             "textarea": "#textarea",
             "scene_mask": "#scene-mask"
         }

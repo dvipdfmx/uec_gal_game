@@ -7,6 +7,7 @@ const GameManager = (function () {
         gmdata = await (await fetch(data_url)).json();
         Scene.init(this, gmdata.constants);
         Character.init(gmdata.constants);
+        Background.init(gmdata.constants);
         await Promise.all([
             Character.load(gmdata.settings.characters),
             Audio.load(gmdata.settings.audios),

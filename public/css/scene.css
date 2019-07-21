@@ -90,13 +90,17 @@
 
 }
 
-#background {
+#backgrounds {}
+
+.background {
     position: absolute;
     object-fit: cover;
     width: 100%;
     height: 100%;
     z-index: -1;
     transition-duration: 10000ms;
+    top: 0;
+    left: 0;
 }
 
 #background.pan {
