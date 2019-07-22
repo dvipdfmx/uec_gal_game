@@ -1,5 +1,4 @@
 const GameManager = (function () {
-    // R = {};
     let gmdata = undefined;
     const GameManager = function () {};
     const R = {};
@@ -26,7 +25,7 @@ const GameManager = (function () {
         await Audio.load(gmdata.settings.audios);
         await Audio.waitload();
         console.err('All Contents Loaded');
-        document.querySelector(gmdata.constants.selectors.loading).classList.add(gmdata.constants.classes.hide);
+        // document.querySelector(gmdata.constants.selectors.loading).classList.add(gmdata.constants.classes.hide);
         Scene.find(start_scene_id).show();
     };
 
@@ -85,16 +84,6 @@ const GameManager = (function () {
                 return this.flags_some(data.ids, data.value);
         }
     };
-
-
-    // GameManager.prototype.start = function () {
-    //     R.mask.classList.remove(gmdata.classes.fade);
-    // };
-
-    // GameManager.prototype.end = function () {
-    //     R.mask.classList.add(gmdata.classes.fade);
-    // };
-
 
     return GameManager;
 })();
