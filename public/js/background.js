@@ -6,8 +6,7 @@ const Background = (function () {
     };
     const load_promises = [];
     const Background = function (url) {
-        const els = this.create(url);
-
+        this.create(url);
         this.url = url;
         dict[url] = this;
     };
@@ -20,7 +19,7 @@ const Background = (function () {
     };
     Background.prototype.create = function (url) {
         const wrap = document.createElement('div');
-        wrap.classList.add(constants.classes.background_wrap)
+        wrap.classList.add(constants.classes.background_wrap);
         const img = document.createElement('img');
         img.src = url;
         img.classList.add(constants.classes.hide);
@@ -60,7 +59,7 @@ const Background = (function () {
         }
     };
     Background.prototype.states = function (types) {
-        console.log(types, this.wrap);
+        console.log(types, this.wrap,this);
         this.states_types = types;
         types.forEach(e => this.wrap.classList.add(e));
     }

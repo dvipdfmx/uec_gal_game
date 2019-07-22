@@ -217,9 +217,9 @@ const Scene = (function () {
             this.uneffects();
             this.unstates();
             this.set_characters(script.characters || []);
+            if (script.img) this.set_image(script.img);
             if (script.effects) this.effects(script.effects);
             if (script.states) this.states(script.states);
-            if (script.img) this.set_image(script.img);
         }, 0);
         this.last_script = script;
     };

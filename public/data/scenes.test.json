@@ -76,10 +76,11 @@
             "x": 30,
             "y": 0
         }],
+        "states":["blur"],
         "img": "../img/zach-taiji-9z3PSK4sn1c-unsplash.jpg"
     }, {
         "name": "太郎",
-        "text": "ロウシーハオ",
+        "text": "ロウシーハオ111",
         "speed": 1,
         "characters": [{
             "id": "eriri",
