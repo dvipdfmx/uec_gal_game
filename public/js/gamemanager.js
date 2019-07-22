@@ -25,8 +25,12 @@ const GameManager = (function () {
         await Audio.load(gmdata.settings.audios);
         await Audio.waitload();
         console.err('All Contents Loaded');
-        // document.querySelector(gmdata.constants.selectors.loading).classList.add(gmdata.constants.classes.hide);
+        // this.hide_loading();
         Scene.find(start_scene_id).show();
+    };
+    
+    GameManager.prototype.hide_loading=function(){
+        document.querySelector(gmdata.constants.selectors.loading).classList.add(gmdata.constants.classes.hide);
     };
 
     GameManager.prototype.update_progress = function (progress, message) {
