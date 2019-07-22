@@ -69,6 +69,7 @@ const Character = (function () {
     };
     Character.prototype.set_position = function (data) {
         this.element.classList.remove(Character.constants.classes.hide_opacity);
+        this.element.style.transitionDuration = (data.duration === 0 ? 0 : (data.duration || 1000)) + 'ms';
         this.element.style.left = data.x + 50 + 'vw';
         this.element.style.top = -data.y + 50 + 'vh';
         this.element.style.transform = `translate(-50%,-50%) scale(${data.scale||1}) rotate(${data.rotate||0}deg)`;

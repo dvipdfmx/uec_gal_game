@@ -304,7 +304,6 @@ const Scene = (function () {
         if (choice && choice.length) {
             R.choice.classList.remove(Scene.constants.classes.hide);
             const avail_choice = choice.filter(e => !e.onflags || Scene.gm.check_flags(e.onflags));
-            // console.log(avail_choice);
             if (skip_select && avail_choice.length === 1) {
                 console.ok('Skip selection');
                 this.advance_scene(avail_choice[0]);

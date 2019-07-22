@@ -7,7 +7,7 @@
             "id": "megumi",
             "states": ["bottomup"],
             "scale": 2,
-            "fast": true
+            "duration": 0
         }]
     }, {
         "name": "結衣菜",

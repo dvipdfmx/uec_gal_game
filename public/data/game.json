@@ -35,6 +35,6 @@
     "settings": {
         "characters": "../data/characters.test.json",
         "audios": "../data/audios.test.json",
-        "scenes": "../data/scenes.json"
+        "scenes": "../data/scenes.test.json"
     }
 }
