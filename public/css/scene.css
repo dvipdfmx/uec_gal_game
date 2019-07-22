@@ -23,8 +23,43 @@
     font-size: xx-large;
     color: white;
     background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
+#loading_content{
+    animation: 1000ms infinite rotate linear;
+}
+
+@keyframes rotate{
+    0% {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(180deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+#progress-bar{
+    height: 20px;
+    width: 80%;
+    background: gray;
+    margin: 20px auto;
+}
+#progress{
+    height: 20px;
+    background: lightseagreen;
+    width: 0%;
+}
+#progress-what{
+    font-size: large;
+    font-family: sans-serif;
+}
 #main {
     position: fixed;
     top: 0;

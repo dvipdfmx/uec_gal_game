@@ -25,7 +25,9 @@
             "textarea": "#textarea",
             "scene_mask": "#scene-mask",
             "loading": "#loading",
-            "loading_content": "#loading_content"
+            "loading_content": "#loading_content",
+            "progress":"#progress",
+            "progress_what":"#progress-what"
         }
     },
     "settings": {
