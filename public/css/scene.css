@@ -54,6 +54,7 @@
 #progress{
     height: 20px;
     background: lightseagreen;
+    width: 0%;
 }
 #progress-what{
     font-size: large;

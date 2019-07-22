@@ -2,13 +2,13 @@ const GameManager = (function () {
     // R = {};
     let gmdata = undefined;
     const GameManager = function () {};
-    const R={};
+    const R = {};
 
     GameManager.prototype.init = async function (data_url, start_scene_id) {
         gmdata = await (await fetch(data_url)).json();
-        R.progress=document.querySelector(gmdata.constants.selectors.progress);
-        R.progress_what=document.querySelector(gmdata.constants.selectors.progress_what);
-        this.update_progress(10,'ゲームデータを読み込んでいます...');
+        R.progress = document.querySelector(gmdata.constants.selectors.progress);
+        R.progress_what = document.querySelector(gmdata.constants.selectors.progress_what);
+        this.update_progress(10, 'ゲームデータを読み込んでいます...');
         Scene.init(this, gmdata.constants);
         Scene.clear(true);
         Character.init(gmdata.constants);
@@ -16,13 +16,13 @@ const GameManager = (function () {
         // await Promise.all([
         // ]);
         this.flags = gmdata.flags;
-        this.update_progress(30,'画像を読み込んでいます...');
+        this.update_progress(30, '画像を読み込んでいます...');
         await Scene.load(gmdata.settings.scenes);
         await Background.waitload();
-        this.update_progress(60,'キャラクターを読み込んでいます...');
+        this.update_progress(60, 'キャラクターを読み込んでいます...');
         await Character.load(gmdata.settings.characters);
         await Character.waitload();
-        this.update_progress(90,'音声データを読み込んでいます...');
+        this.update_progress(90, '音声データを読み込んでいます...');
         await Audio.load(gmdata.settings.audios);
         await Audio.waitload();
         console.err('All Contents Loaded');
@@ -30,9 +30,9 @@ const GameManager = (function () {
         Scene.find(start_scene_id).show();
     };
 
-    GameManager.prototype.update_progress=function(progress,message){
-        R.progress.style.width=progress+'%';
-        R.progress_what.textContent=message;
+    GameManager.prototype.update_progress = function (progress, message) {
+        R.progress.style.width = progress + '%';
+        R.progress_what.textContent = message;
     };
 
     /**
