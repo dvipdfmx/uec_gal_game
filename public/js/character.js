@@ -42,7 +42,9 @@ const Character = (function () {
             image.classList.add(Character.constants.classes.hide);
             image.classList.add(Character.constants.classes.character_diff);
             load_promises.push(new Promise((res, rej) => {
-                image.addEventListener('load', res);
+                image.addEventListener('load', () => {
+                    res(e.url);
+                });
                 image.addEventListener('error', res);
             }));
             e.element = image;
@@ -65,10 +67,12 @@ const Character = (function () {
             }
         }
     };
-    Character.prototype.set_position = function (x, y) {
+    Character.prototype.set_position = function (data) {
         this.element.classList.remove(Character.constants.classes.hide_opacity);
-        this.element.style.left = x + 50 + 'vw';
-        this.element.style.top = -y + 50 + 'vh';
+        this.element.style.left = data.x + 50 + 'vw';
+        this.element.style.top = -data.y + 50 + 'vh';
+        this.element.style.transform = `translate(-50%,-50%) scale(${data.scale||1}) rotate(${data.rotate||0}deg)`;
+        this.element.style.zIndex = `${(data.zindex||0)+0}`;
     };
     Character.prototype.hide = function () {
         if (this.move_timeout_start) clearTimeout(this.move_timeout_start);

@@ -12,8 +12,6 @@ const GameManager = (function () {
         Scene.clear(true);
         Character.init(gmdata.constants);
         Background.init(gmdata.constants);
-        // await Promise.all([
-        // ]);
         this.flags = gmdata.flags;
         this.update_progress(30, '画像を読み込んでいます...');
         await Scene.load(gmdata.settings.scenes);
@@ -24,8 +22,9 @@ const GameManager = (function () {
         this.update_progress(90, '音声データを読み込んでいます...');
         await Audio.load(gmdata.settings.audios);
         await Audio.waitload();
+        this.update_progress(100, 'データの読み込みが完了しました');
         console.err('All Contents Loaded');
-        // this.hide_loading();
+        this.hide_loading();
         Scene.find(start_scene_id).show();
     };
     

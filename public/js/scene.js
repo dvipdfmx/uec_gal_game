@@ -137,6 +137,7 @@ const Scene = (function () {
         this.last_script_is_choice = false;
         this.script_index = 0;
         this.uneffects();
+        this.unstates();
         if (this.audios) this.unset_audios(this.audios);
     };
     /**
@@ -179,6 +180,12 @@ const Scene = (function () {
     Scene.prototype.uneffects = function () {
         this.current_background.uneffects();
     };
+    Scene.prototype.states = function (types) {
+        this.current_background.states(types);
+    };
+    Scene.prototype.unstates = function () {
+        this.current_background.unstates();
+    };
 
     /****************************************
      * Scripts
@@ -189,6 +196,7 @@ const Scene = (function () {
         R.textarea_wrap.classList.remove(Scene.constants.classes.hide);
         R.choice_wrap.classList.add(Scene.constants.classes.hide_opacity);
         R.name.textContent = script.name;
+        R.text.textContent = '';
         R.text_hidden.textContent = script.text;
         const str_len = script.text.length;
         let char_index = 0;
@@ -196,8 +204,10 @@ const Scene = (function () {
             text_show_interval = setInterval((() => {
                 const f = () => {
                     R.text.textContent = script.text.slice(0, ++char_index);
-                    if (char_index == str_len)
+                    if (char_index == str_len) {
                         clearInterval(text_show_interval);
+                        R.text_hidden.appendChild(this.create_text_end());
+                    }
                 };
                 return (f(), f);
             })(), script.speed || TEXT_SHOW_SPEED);
@@ -205,11 +215,18 @@ const Scene = (function () {
         }, wait);
         setTimeout(() => {
             this.uneffects();
+            this.unstates();
             this.set_characters(script.characters || []);
             if (script.effects) this.effects(script.effects);
+            if (script.states) this.states(script.states);
             if (script.img) this.set_image(script.img);
         }, 0);
         this.last_script = script;
+    };
+    Scene.prototype.create_text_end = function () {
+        const e = document.createElement('span');
+        e.classList.add(Scene.constants.classes.text_end);
+        return e;
     };
     Scene.prototype.next_script = function () {
         Audio.find(Scene.constants.audios.textarea_click).stop();
@@ -249,7 +266,7 @@ const Scene = (function () {
         audios_data.forEach(e => {
             clearInterval(e.timeout);
             e.timeout = 0;
-            Audio.find(e.id).stop();
+            Audio.find(e.id).stop(true);
         });
     };
     Scene.prototype.set_audio = function (audio_data) {
@@ -271,7 +288,7 @@ const Scene = (function () {
     };
     Scene.prototype.set_character = function (character_data) {
         const character = Character.find(character_data.id);
-        character.set_position(character_data.x, character_data.y);
+        character.set_position(character_data);
         character.set_diff(character_data.diff);
         if (character_data.effects) character.effects(character_data.effects);
         if (character_data.states) character.states(character_data.states);

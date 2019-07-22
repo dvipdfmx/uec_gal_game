@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="../css/scene.css">
-    <title>でんまち</title>
+    <title>電まち</title>
 </head>
 
 <body oncontextmenu="return false;">
@@ -21,8 +21,7 @@
     </div>
     <div id="main">
         <div id="scene-mask" class="fade"></div>
-        <div id="header" style="grid-row: 1;">
-        </div>
+        <!-- <div id="header" style="grid-row: 1;"></div> -->
         <div id="scene" style="grid-row: 2;">
             <div id="audios" style="display: none;"></div>
             <div id="characters"></div>
@@ -44,7 +43,9 @@
                 </div>
             </div>
         </div>
-        <div id="footer" style="grid-row: 3;"></div>
+        <!-- <div id="footer" style="grid-row: 3;">
+            <button>ミュート</button>
+        </div> -->
         <div id="backgrounds"></div>
     </div>
 
@@ -56,7 +57,7 @@
     <script src="../js/color_console.js"></script>
     <script>
         // document.querySelector('#loading').addEventListener('click', () => {
-            console.log('%cUEC GAL GAME', 'font-size:xx-large;color:lightseagreen');
+            console.log('%cDenmachi', 'font-size:xx-large;color:lightseagreen');
             (async () => {
                 const gm = new GameManager();
                 await gm.init(data_url = '../data/game.json', start = 'scene1');
