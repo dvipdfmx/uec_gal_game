@@ -26,7 +26,7 @@ const GameManager = (function () {
         await Audio.load(gmdata.settings.audios);
         await Audio.waitload();
         console.err('All Contents Loaded');
-        // document.querySelector(gmdata.constants.selectors.loading).classList.add(gmdata.constants.classes.hide);
+        document.querySelector(gmdata.constants.selectors.loading).classList.add(gmdata.constants.classes.hide);
         Scene.find(start_scene_id).show();
     };
 
