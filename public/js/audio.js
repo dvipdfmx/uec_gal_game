@@ -11,7 +11,7 @@ const Audio = (function () {
         this.audio.loop = data.loop;
         const self = this;
         load_promises.push(new Promise((res, rej) => {
-            self.audio.addEventListener('canplaythrough', ()=>{
+            self.audio.addEventListener('canplaythrough', () => {
                 res(data.url);
             });
             self.audio.addEventListener('error', res);
@@ -40,7 +40,9 @@ const Audio = (function () {
         Audio.compile(await (await fetch(url)).json());
     };
     Audio.find = function (id) {
-        return dict[id];
+        const r = dict[id];
+        if (!r) console.err(`Audio not found: ${id}`);
+        return r;
     };
 
     Audio.prototype.play = function (target_volume = 1.0, fadein = false) {

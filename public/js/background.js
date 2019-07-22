@@ -59,7 +59,6 @@ const Background = (function () {
         }
     };
     Background.prototype.states = function (types) {
-        console.log(types, this.wrap,this);
         this.states_types = types;
         types.forEach(e => this.wrap.classList.add(e));
     }

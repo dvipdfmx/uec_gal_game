@@ -23,12 +23,12 @@ const GameManager = (function () {
         await Audio.load(gmdata.settings.audios);
         await Audio.waitload();
         this.update_progress(100, 'データの読み込みが完了しました');
-        console.err('All Contents Loaded');
+        console.ok('All Contents Loaded');
         this.hide_loading();
         Scene.find(start_scene_id).show();
     };
-    
-    GameManager.prototype.hide_loading=function(){
+
+    GameManager.prototype.hide_loading = function () {
         document.querySelector(gmdata.constants.selectors.loading).classList.add(gmdata.constants.classes.hide);
     };
 

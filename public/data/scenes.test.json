@@ -86,7 +86,7 @@
             "id": "eriri",
             "x": -30,
             "y": 0,
-            "effects": ["nod"]
+            "states": ["nod"]
         }, {
             "id": "utaha",
             "x": 30,

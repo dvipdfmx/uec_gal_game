@@ -333,7 +333,7 @@
     left: 50vw;
     top: 50vh;
     transform: translate(-50%, -50%);
-    transition-duration: 1000ms;
+    /* transition-duration: 1000ms; */
     opacity: 1.0;
 }
 
@@ -350,6 +350,18 @@
 
 .character.nod>.character-in {
     animation: nod linear 400ms 1;
+}
+.character.bottomup>.character-in {
+    animation: bottomup linear 2000ms 1;
+}
+
+@keyframes bottomup{
+    0%{
+        transform: translateY(40%);
+    }
+    100%{
+        transform: translateY(0%);
+    }
 }
 
 .character>.character-in {

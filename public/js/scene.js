@@ -169,22 +169,22 @@ const Scene = (function () {
      */
     Scene.prototype.set_image = function (url) {
         this.current_background = Background.find(url);
-        this.current_background.show();
+        this.current_background && this.current_background.show();
     };
     /**
      * 背景画像の効果を適用する（複数）
      */
     Scene.prototype.effects = function (types) {
-        this.current_background.effects(types);
+        this.current_background && this.current_background.effects(types);
     };
     Scene.prototype.uneffects = function () {
-        this.current_background.uneffects();
+        this.current_background && this.current_background.uneffects();
     };
     Scene.prototype.states = function (types) {
-        this.current_background.states(types);
+        this.current_background && this.current_background.states(types);
     };
     Scene.prototype.unstates = function () {
-        this.current_background.unstates();
+        this.current_background && this.current_background.unstates();
     };
 
     /****************************************
@@ -263,7 +263,7 @@ const Scene = (function () {
         audios_data.forEach(e => this.set_audio(e));
     };
     Scene.prototype.unset_audios = function (audios_data) {
-        audios_data.forEach(e => {
+        audios_data && audios_data.forEach(e => {
             clearInterval(e.timeout);
             e.timeout = 0;
             Audio.find(e.id).stop(true);
