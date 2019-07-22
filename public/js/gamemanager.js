@@ -4,16 +4,6 @@ const GameManager = (function () {
     const GameManager = function () {};
 
     GameManager.prototype.init = async function (data_url, start_scene_id) {
-        // let loading_i = 0;
-        // const loading = setInterval(() => {
-        //     document.querySelector(gmdata.constants.selectors.loading_content).innerHTML = 'Now loading' + '.'.repeat(loading_i) + '&emsp;'.repeat(3 - loading_i);
-        //     if (loading_i === 3) {
-        //         loading_i = 0;
-        //     } else {
-        //         loading_i++;
-        //     }
-        // }, 10);
-
         gmdata = await (await fetch(data_url)).json();
         Scene.init(this, gmdata.constants);
         Scene.clear(true);
@@ -29,7 +19,6 @@ const GameManager = (function () {
         await Character.waitload();
         await Audio.waitload();
         console.err('All Contents Loaded');
-        // clearInterval(loading);
         document.querySelector(gmdata.constants.selectors.loading).classList.add(gmdata.constants.classes.hide);
         Scene.find(start_scene_id).show();
     };
