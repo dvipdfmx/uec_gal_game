@@ -88,5 +88,15 @@ const GameManager = (function () {
         }
     };
 
+    GameManager.prototype.store = function () {
+        localStorage.setItem('data', JSON.stringify({
+            scene: Scene.current,
+            flags: this.flags
+        }));
+    };
+    GameManager.prototype.restore = function () {
+        const data = localStorage.getItem('data');
+        
+    };
     return GameManager;
 })();

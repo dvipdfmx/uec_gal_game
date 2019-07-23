@@ -1,0 +1,79 @@
+#characters {
+    position: relative;
+}
+
+.character {
+    position: absolute;
+    left: 50vw;
+    top: 50vh;
+    transform: translate(-50%, -50%);
+    transition-duration: 1000ms;
+    opacity: 1.0;
+}
+
+.character>.character-in>.character-diff {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+/* effects */
+.character.swing>.character-in {
+    animation: swing linear 100ms 3;
+}
+
+.character.nod>.character-in {
+    animation: nod linear 400ms 1;
+}
+
+.character.bottomup>.character-in {
+    animation: bottomup linear 2000ms 1;
+}
+
+@keyframes bottomup {
+    0% {
+        transform: scale(2) translateY(50%);
+    }
+
+    100% {
+        transform: scale(2) translateY(-50%);
+    }
+}
+
+.character>.character-in {
+    transition-duration: 1000ms;
+}
+
+/* states */
+.character.disable>.character-in {
+    opacity: .5;
+    transition-duration: 1000ms;
+}
+
+@keyframes swing {
+    0% {
+        transform: translateX(10px);
+    }
+
+    50% {
+        transform: translateX(-10px);
+    }
+
+    100% {
+        transform: translateX(10px);
+    }
+}
+
+@keyframes nod {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(50px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
