@@ -1,168 +1,187 @@
 {
-    "definitions": {},
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "#/",
     "type": "array",
     "items": {
-      "$id": "#/items",
-      "type": "object",
-      "properties": {
-        "id": {
-          "$id": "#/items/properties/id",
-          "type": "string",
-          "pattern": "^(.*)$"
-        },
-        "scripts": {
-          "$id": "#/items/properties/scripts",
-          "type": "array",
-          "items": {
-            "$id": "#/items/properties/scripts/items",
-            "type": "object",
-            "properties": {
-              "name": {
-                "$id": "#/items/properties/scripts/items/properties/name",
-                "type": "string",
-                "pattern": "^(.*)$"
-              },
-              "text": {
-                "$id": "#/items/properties/scripts/items/properties/text",
-                "type": "string",
-                "pattern": "^(.*)$"
-              },
-              "characters": {
-                "$id": "#/items/properties/scripts/items/properties/characters",
+        "$id": "#/items",
+        "type": "object",
+        "required": ["id"],
+        "properties": {
+            "id": {
+                "type": "string"
+            },
+            "scripts": {
                 "type": "array",
                 "items": {
-                  "$id": "#/items/properties/scripts/items/properties/characters/items",
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "$id": "#/items/properties/scripts/items/properties/characters/items/properties/id",
-                      "type": "string",
-                      "pattern": "^(.*)$"
-                    },
-                    "x": {
-                      "$id": "#/items/properties/scripts/items/properties/characters/items/properties/x",
-                      "type": "number"
-                    },
-                    "y": {
-                      "$id": "#/items/properties/scripts/items/properties/characters/items/properties/y",
-                      "type": "number"
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "text": {
+                            "type": "string"
+                        },
+                        "characters": {
+                            "$ref": "#/definitions/characters"
+                        },
+                        "effects": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "examples": ["pan", "up", "down", "right", "left"]
+                            }
+                        },
+                        "states": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "examples": ["blur"]
+                            }
+                        },
+                        "audios": {
+                            "$ref": "#/definitions/audios"
+                        },
+                        "choice": {
+                            "$ref": "#/definitions/choice"
+                        }
                     }
-                  }
                 }
-              },
-              "effects": {
-                "$id": "#/items/properties/scripts/items/properties/effects",
-                "type": "array",
-                "items": {
-                  "$id": "#/items/properties/scripts/items/properties/effects/items",
-                  "type": "string",
-                  "pattern": "^(.*)$"
-                }
-              },
-              "audios": {
-                "$id": "#/items/properties/scripts/items/properties/audios",
-                "type": "array",
-                "items": {
-                  "$id": "#/items/properties/scripts/items/properties/audios/items",
-                  "type": "object",
-                  "properties": {
+            },
+            "img": {
+                "type": "string"
+            },
+            "choice": {
+                "$ref": "#/definitions/choice"
+            },
+            "audios": {
+                "$ref": "#/definitions/audios"
+            }
+        }
+    },
+    "definitions": {
+        "audios": {
+            "$id": "#/definitions/audios",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": ["id"],
+                "properties": {
                     "id": {
-                      "$id": "#/items/properties/scripts/items/properties/audios/items/properties/id",
-                      "type": "string",
-                      "pattern": "^(.*)$"
+                        "type": "string"
                     },
                     "time": {
-                      "$id": "#/items/properties/scripts/items/properties/audios/items/properties/time",
-                      "type": "number"
+                        "type": "integer",
+                        "default": 0,
+                        "description": "開始時刻ms"
                     },
                     "volume": {
-                      "$id": "#/items/properties/scripts/items/properties/audios/items/properties/volume",
-                      "type": "number"
+                        "type": "integer",
+                        "default": 0,
+                        "description": "音量0.0~1.0"
+                    },
+                    "fadein": {
+                        "type": "boolean",
+                        "default": false
                     }
-                  }
                 }
-              }
             }
-          }
-        },
-        "img": {
-          "$id": "#/items/properties/img",
-          "type": "string",
-          "pattern": "^(.*)$"
         },
         "choice": {
-          "$id": "#/items/properties/choice",
-          "type": "array",
-          "items": {
-            "$id": "#/items/properties/choice/items",
-            "type": "object",
-            "properties": {
-              "label": {
-                "$id": "#/items/properties/choice/items/properties/label",
-                "type": "string",
-                "pattern": "^(.*)$"
-              },
-              "scene_id": {
-                "$id": "#/items/properties/choice/items/properties/scene_id",
-                "type": "string",
-                "pattern": "^(.*)$"
-              },
-              "flags": {
-                "$id": "#/items/properties/choice/items/properties/flags",
-                "type": "array",
-                "items": {
-                  "$id": "#/items/properties/choice/items/properties/flags/items",
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "$id": "#/items/properties/choice/items/properties/flags/items/properties/id",
-                      "type": "string",
-                      "pattern": "^(.*)$"
+            "$id": "#/definitions/choice",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": ["label", "scene_id"],
+                "properties": {
+                    "label": {
+                        "type": "string"
                     },
-                    "value": {
-                      "$id": "#/items/properties/choice/items/properties/flags/items/properties/value",
-                      "type": "boolean"
+                    "scene_id": {
+                        "type": "string"
                     },
-                    "method": {
-                      "$id": "#/items/properties/choice/items/properties/flags/items/properties/method",
-                      "type": "string",
-                      "pattern": "^(.*)$"
+                    "flags": {
+                        "title": "フラグを立てる",
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string"
+                                },
+                                "value": {
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "method": {
+                                    "type": "string",
+                                    "examples": ["and", "or", "xor"]
+                                }
+                            }
+                        }
+                    },
+                    "onflags": {
+                        "title": "フラグが立ってるときに選択肢を表示する",
+                        "type": "object",
+                        "required": ["value", "method", "ids"],
+                        "properties": {
+                            "value": {
+                                "type": "number"
+                            },
+                            "method": {
+                                "type": "string",
+                                "examples": ["all", "some"]
+                            },
+                            "ids": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        }
                     }
-                  }
                 }
-              }
             }
-          }
         },
-        "audios": {
-          "$id": "#/items/properties/audios",
-          "type": "array",
-          "items": {
-            "$id": "#/items/properties/audios/items",
-            "type": "object",
-            "properties": {
-              "id": {
-                "$id": "#/items/properties/audios/items/properties/id",
-                "type": "string",
-                "pattern": "^(.*)$"
-              },
-              "time": {
-                "$id": "#/items/properties/audios/items/properties/time",
-                "type": "number"
-              },
-              "volume": {
-                "$id": "#/items/properties/audios/items/properties/volume",
-                "type": "number"
-              },
-              "fadein": {
-                "$id": "#/items/properties/audios/items/properties/fadein",
-                "type": "boolean"
-              }
+        "characters": {
+            "$id": "#/definitions/characters",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": ["id"],
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "diff": {
+                        "type": "string"
+                    },
+                    "effects": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "examples": ["swing", "nod"]
+                        }
+                    },
+                    "states": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "examples": ["bottomup", "disable"]
+                        }
+                    },
+                    "x": {
+                        "type": "integer",
+                        "default": 0
+                    },
+                    "y": {
+                        "type": "integer",
+                        "default": 0
+                    },
+                    "scale": {
+                        "type": "integer",
+                        "default": 0
+                    }
+                }
             }
-          }
         }
-      }
     }
-  }
+}

@@ -1,46 +1,6 @@
 [{
-    "id": "scene1",
-    "scripts": [{
-        "text": "(今日から新学期か...、ピンポーン、誰だろう)",
-        "states": ["blur"],
-        "characters": [{
-            "id": "megumi",
-            "states": ["bottomup"],
-            "scale": 2,
-            "duration": 0
-        }]
-    }, {
-        "name": "結衣菜",
-        "text": "この度隣に越してきました、篠花 結衣菜と申します",
-        "characters": [{
-            "id": "megumi"
-        }]
-    }, {
-        "text": "(ん、女の子？)",
-        "characters": [{
-            "id": "megumi"
-        }]
-    }, {
-        "name": "結衣菜",
-        "text": "あの、、これ、、つまらないものですが、、",
-        "characters": [{
-            "id": "megumi",
-            "effects": ["nod"]
-        }]
-    }, {
-        "text": "(礼儀正しい子だな)",
-        "characters": [{
-            "id": "megumi"
-        }]
-    }, {
-        "name": "結衣菜",
-        "text": "どうぞ",
-        "characters": [{
-            "id": "megumi"
-        }]
-    }, {
-        "name": "結衣菜",
-        "text": "姉も一緒に越してきたのですが仕事が忙しいみたいで、、失礼ながら私だけでご挨拶に伺いました。"
+    "audios": [{
+        "fadein": false
     }],
-    "img": "../img/001.jpg"
+    "choice": [{"onflags": {}}]
 }]
