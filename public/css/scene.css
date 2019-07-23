@@ -222,6 +222,16 @@
 .background-wrap.up {
     animation: linear 5s background-up forwards;
 }
+.background-wrap.down {
+    animation: linear 5s background-up forwards reverse;
+}
+.background-wrap.right {
+    animation: linear 5s background-right forwards;
+}
+.background-wrap.left {
+    animation: linear 5s background-right forwards reverse;
+}
+
 
 @keyframes background-up {
     0% {
@@ -230,6 +240,15 @@
 
     100% {
         transform: scale(1.2) translateY(-5%);
+    }
+}
+@keyframes background-right {
+    0% {
+        transform: scale(1.2) translateX(5%);
+    }
+
+    100% {
+        transform: scale(1.2) translateX(-5%);
     }
 }
 
