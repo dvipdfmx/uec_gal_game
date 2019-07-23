@@ -1,5 +1,4 @@
 const GameManager = (function () {
-    // R = {};
     let gmdata = undefined;
     const GameManager = function () {};
     const R = {};
@@ -13,8 +12,6 @@ const GameManager = (function () {
         Scene.clear(true);
         Character.init(gmdata.constants);
         Background.init(gmdata.constants);
-        // await Promise.all([
-        // ]);
         this.flags = gmdata.flags;
         this.update_progress(30, '画像を読み込んでいます...');
         await Scene.load(gmdata.settings.scenes);
@@ -25,9 +22,14 @@ const GameManager = (function () {
         this.update_progress(90, '音声データを読み込んでいます...');
         await Audio.load(gmdata.settings.audios);
         await Audio.waitload();
-        console.err('All Contents Loaded');
-        document.querySelector(gmdata.constants.selectors.loading).classList.add(gmdata.constants.classes.hide);
+        this.update_progress(100, 'データの読み込みが完了しました');
+        console.ok('All Contents Loaded');
+        this.hide_loading();
         Scene.find(start_scene_id).show();
+    };
+
+    GameManager.prototype.hide_loading = function () {
+        document.querySelector(gmdata.constants.selectors.loading).classList.add(gmdata.constants.classes.hide);
     };
 
     GameManager.prototype.update_progress = function (progress, message) {
@@ -85,16 +87,6 @@ const GameManager = (function () {
                 return this.flags_some(data.ids, data.value);
         }
     };
-
-
-    // GameManager.prototype.start = function () {
-    //     R.mask.classList.remove(gmdata.classes.fade);
-    // };
-
-    // GameManager.prototype.end = function () {
-    //     R.mask.classList.add(gmdata.classes.fade);
-    // };
-
 
     return GameManager;
 })();

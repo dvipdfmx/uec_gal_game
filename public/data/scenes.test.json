@@ -4,20 +4,27 @@
         "name": "太郎",
         "text": "入学したよ",
         "characters": [{
-            "id": "megumi",
-            "x": 0,
-            "y": 10
-        }, {
             "id": "eriri",
             "diff": "happy",
             "x": -30,
-            "y": 0
+            "y": 0,
+            "scale": 2
         }, {
             "id": "utaha",
             "x": 30,
-            "y": 0
+            "y": 0,
+            "rotate": 224,
+            "zindex": 2
+        }, {
+            "id": "megumi",
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "effects": ["nod"],
+            "zindex": 1
         }],
         "effects": ["pan"],
+        "states": ["blur"],
         "audios": [{
             "id": "ban",
             "time": 0,
@@ -51,8 +58,9 @@
         "characters": [{
             "id": "eriri",
             "diff": "happy",
-            "x": 30,
-            "y": 0,
+            "scale": 1.5,
+            "x": 0,
+            "y": -30,
             "effects": ["swing"]
         }]
     }, {
@@ -66,24 +74,29 @@
             "states": ["disable"]
         }, {
             "id": "utaha",
+            "states": ["bottomup"],
+            "duration": 0,
             "x": 30,
             "y": 0
         }],
+        "states": ["blur"],
         "img": "../img/zach-taiji-9z3PSK4sn1c-unsplash.jpg"
     }, {
         "name": "太郎",
-        "text": "ロウシーハオ",
+        "text": "ロウシーハオ111",
         "speed": 1,
         "characters": [{
             "id": "eriri",
             "x": -30,
-            "y": 0
+            "y": 0,
+            "states": ["nod"]
         }, {
             "id": "utaha",
             "x": 30,
             "y": 0,
             "states": ["disable"]
-        }]
+        }],
+        "states": ["up", "blur"]
     }],
     "img": "../img/anna-jimenez-calaf-DsjPKrzBO0w-unsplash.jpg",
     "choice": [{
