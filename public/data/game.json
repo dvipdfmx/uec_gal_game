@@ -13,7 +13,9 @@
             "character_in": "character-in",
             "character_diff": "character-diff",
             "character": "character",
-            "background": "background"
+            "background": "background",
+            "text_end": "text-end",
+            "background_wrap": "background-wrap"
         },
         "audios": {
             "choice_hover": "button",
@@ -25,7 +27,9 @@
             "textarea": "#textarea",
             "scene_mask": "#scene-mask",
             "loading": "#loading",
-            "loading_content": "#loading_content"
+            "loading_content": "#loading_content",
+            "progress": "#progress",
+            "progress_what": "#progress-what"
         }
     },
     "settings": {

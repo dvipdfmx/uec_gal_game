@@ -1,37 +1,40 @@
 const GameManager = (function () {
-    // R = {};
     let gmdata = undefined;
     const GameManager = function () {};
+    const R = {};
 
     GameManager.prototype.init = async function (data_url, start_scene_id) {
-        // let loading_i = 0;
-        // const loading = setInterval(() => {
-        //     document.querySelector(gmdata.constants.selectors.loading_content).innerHTML = 'Now loading' + '.'.repeat(loading_i) + '&emsp;'.repeat(3 - loading_i);
-        //     if (loading_i === 3) {
-        //         loading_i = 0;
-        //     } else {
-        //         loading_i++;
-        //     }
-        // }, 10);
-
         gmdata = await (await fetch(data_url)).json();
+        R.progress = document.querySelector(gmdata.constants.selectors.progress);
+        R.progress_what = document.querySelector(gmdata.constants.selectors.progress_what);
+        this.update_progress(10, 'ゲームデータを読み込んでいます...');
         Scene.init(this, gmdata.constants);
         Scene.clear(true);
         Character.init(gmdata.constants);
         Background.init(gmdata.constants);
-        await Promise.all([
-            Character.load(gmdata.settings.characters),
-            Audio.load(gmdata.settings.audios),
-            Scene.load(gmdata.settings.scenes),
-        ]);
         this.flags = gmdata.flags;
+        this.update_progress(30, '画像を読み込んでいます...');
+        await Scene.load(gmdata.settings.scenes);
         await Background.waitload();
+        this.update_progress(60, 'キャラクターを読み込んでいます...');
+        await Character.load(gmdata.settings.characters);
         await Character.waitload();
+        this.update_progress(90, '音声データを読み込んでいます...');
+        await Audio.load(gmdata.settings.audios);
         await Audio.waitload();
-        console.err('All Contents Loaded');
-        // clearInterval(loading);
-        document.querySelector(gmdata.constants.selectors.loading).classList.add(gmdata.constants.classes.hide);
+        this.update_progress(100, 'データの読み込みが完了しました');
+        console.ok('All Contents Loaded');
+        this.hide_loading();
         Scene.find(start_scene_id).show();
+    };
+
+    GameManager.prototype.hide_loading = function () {
+        document.querySelector(gmdata.constants.selectors.loading).classList.add(gmdata.constants.classes.hide);
+    };
+
+    GameManager.prototype.update_progress = function (progress, message) {
+        R.progress.style.width = progress + '%';
+        R.progress_what.textContent = message;
     };
 
     /**
@@ -85,15 +88,15 @@ const GameManager = (function () {
         }
     };
 
-
-    // GameManager.prototype.start = function () {
-    //     R.mask.classList.remove(gmdata.classes.fade);
-    // };
-
-    // GameManager.prototype.end = function () {
-    //     R.mask.classList.add(gmdata.classes.fade);
-    // };
-
-
+    GameManager.prototype.store = function () {
+        localStorage.setItem('data', JSON.stringify({
+            scene: Scene.current,
+            flags: this.flags
+        }));
+    };
+    GameManager.prototype.restore = function () {
+        const data = localStorage.getItem('data');
+        
+    };
     return GameManager;
 })();
