@@ -38,6 +38,7 @@
                             }
                         },
                         "audios": {
+                            "title": "スクリプト開始時に再生を開始する音声",
                             "$ref": "#/definitions/audios"
                         },
                         "choice": {
@@ -53,6 +54,7 @@
                 "$ref": "#/definitions/choice"
             },
             "audios": {
+                "title": "シーン開始時に再生を開始する音声",
                 "$ref": "#/definitions/audios"
             }
         }
@@ -71,16 +73,19 @@
                     "time": {
                         "type": "integer",
                         "default": 0,
+                        "examples": [0, 100, 200, 500, 1000],
                         "description": "開始時刻ms"
                     },
                     "volume": {
                         "type": "integer",
                         "default": 0,
+                        "examples": [0.0, 0.5, 1.0],
                         "description": "音量0.0~1.0"
                     },
                     "fadein": {
                         "type": "boolean",
-                        "default": false
+                        "default": false,
+                        "examples": [false, true]
                     }
                 }
             }
@@ -109,7 +114,8 @@
                                 },
                                 "value": {
                                     "type": "boolean",
-                                    "default": false
+                                    "default": false,
+                                    "examples": [true, false]
                                 },
                                 "method": {
                                     "type": "string",
@@ -124,7 +130,8 @@
                         "required": ["value", "method", "ids"],
                         "properties": {
                             "value": {
-                                "type": "number"
+                                "type": "number",
+                                "examples": [0, 1]
                             },
                             "method": {
                                 "type": "string",
@@ -170,15 +177,18 @@
                     },
                     "x": {
                         "type": "integer",
-                        "default": 0
+                        "default": 0,
+                        "title": "画面中央からの画面に対する割合（横）"
                     },
                     "y": {
                         "type": "integer",
-                        "default": 0
+                        "default": 0,
+                        "title": "画面中央からの画面に対する割合（縦）"
                     },
                     "scale": {
                         "type": "integer",
-                        "default": 0
+                        "default": 0,
+                        "examples": [0.0, 0.5, 1.0]
                     }
                 }
             }

@@ -2,5 +2,10 @@
     "audios": [{
         "fadein": false
     }],
-    "choice": [{"onflags": {}}]
+    "choice": [{
+        "onflags": {
+            "method": "all",
+            "value": 1
+        }
+    }]
 }]
