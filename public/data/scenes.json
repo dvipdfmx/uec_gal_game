@@ -1,11 +1,1 @@
-[{
-    "audios": [{
-        "fadein": false
-    }],
-    "choice": [{
-        "onflags": {
-            "method": "all",
-            "value": 1
-        }
-    }]
-}]
+[{"audios": [{"fadein": false}]}]
