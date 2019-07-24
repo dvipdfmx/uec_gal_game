@@ -1,4 +1,4 @@
-# Denmachi Engine*
+# Denmachi Engine**
 Make Gal Game with JSON definition file.
 ## Construction
 ### Scene
